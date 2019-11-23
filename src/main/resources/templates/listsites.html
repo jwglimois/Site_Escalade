@@ -1,0 +1,50 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- Meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width = device-width, initial-scale = 1, shrink-to-fit = no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+<title>Liste des sites</title>
+</head>
+
+<body>
+
+<div class="row justify-content-center">
+<div class="col-11">
+	<table class="table">
+	  <thead class="thead-dark text-center">
+	    <tr>
+	      <th scope="col">N°</th>
+	      <th scope="col">Lieu</th>
+	      <th scope="col">Nombre de secteurs</th>
+	      <th scope="col">Nombre de voies</th>
+	      <th scope="col">Cotation</th>
+	      <th scope="col">Voir la fiche</th>
+	    </tr>
+	  </thead>
+	  <tbody class="text-center">
+	    <tr th:each="site : ${listSites}">
+	      <th scope="row" th:text = "${site.id_site}">N°</th>
+	      <td th:text = "${site.lieu}">Lieu</td>
+	      <td th:text = "${site.nbSecteur}">nbSecteur</td>
+	      <td th:text = "${site.nbVoie}">nbVoie</td>
+	      <td th:text = "${site.cotation}">Cotation</td>
+	      <td>
+	      	
+	      </td>    
+	    </tr>    
+	  </tbody>
+	</table>
+</div>
+</div>
+</div>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+</body>
+</html>
