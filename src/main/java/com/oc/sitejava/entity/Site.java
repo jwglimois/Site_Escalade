@@ -10,7 +10,8 @@ public class Site {
 	
 	@Id
 	private int id_site;
-	private String lieu;
+	private String nomSite;
+	private String region;
 	private int nbSecteur;
 	private int nbVoie;
 	private String cotation;
@@ -28,12 +29,20 @@ public class Site {
 		this.id_site = id_site;
 	}
 
-	public String getLieu() {
-		return lieu;
+	public String getNomSite() {
+		return nomSite;
 	}
 
-	public void setLieu(String lieu) {
-		this.lieu = lieu;
+	public void setNomSite(String nomSite) {
+		this.nomSite = nomSite;
+	}
+	
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
 	}
 
 	public int getNbSecteur() {
