@@ -1,21 +1,46 @@
 package com.oc.sitejava.entity;
 
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
-public class Site {
+@Table(name="site")
+public class Site implements Serializable {
 	
 	@Id
+	@Column(name = "id_site")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id_site;
-	private String nomSite;
-	private String region;
-	private int nbSecteur;
-	private int nbVoie;
-	private String cotation;
 	
+	@Column(name="nom_site")
+	private String nomSite;
+	
+	@Column(name="region")
+	private String region;
+	
+	@Access(AccessType.FIELD)
+	@OneToMany (mappedBy = "site", cascade = CascadeType.ALL)
+	private List<Secteur> listSecteurs;
+	
+	public List<Secteur> getlistSecteurs() {
+		return listSecteurs;
+	}
+
+	public void setlistSecteurs(List<Secteur> listSecteurs) {
+		this.listSecteurs = listSecteurs;
+	}
+
 	protected Site() {		
 	}
 
@@ -45,30 +70,6 @@ public class Site {
 		this.region = region;
 	}
 
-	public int getNbSecteur() {
-		return nbSecteur;
-	}
 
-	public void setNbSecteur(int nbSecteur) {
-		this.nbSecteur = nbSecteur;
-	}
-
-	public int getNbVoie() {
-		return nbVoie;
-	}
-
-	public void setNbVoie(int nbVoie) {
-		this.nbVoie = nbVoie;
-	}
-
-	public String getCotation() {
-		return cotation;
-	}
-
-	public void setCotation(String cotation) {
-		this.cotation = cotation;
-	}
-	
-	
 
 }

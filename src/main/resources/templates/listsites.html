@@ -7,7 +7,7 @@
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 
-<title>Fiche Site</title>
+<title>Liste des sites</title>
 </head>
 
 <body>
@@ -15,46 +15,39 @@
 <div th:replace="menu :: header">
 </div>
 
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-7">
-      One of three columns
-    </div>
-    <div class="col-4">
-      One of three columns
-    </div>
-  </div>
+<div class="row justify-content-center">
+
+	<div class="col-11">
+		<table class="table">
+		  <thead class="thead-dark text-center">
+		    <tr>
+		      <th scope="col">N°</th>
+		      <th scope="col">Lieu</th>
+		      <th scope="col">Région</th>
+		      <th scope="col">Nombre de Secteurs</th>
+		      <th scope="col">Nombre de Voies</th>
+		      <th scope="col">Cotation</th>
+		      <th scope="col">Voir la fiche</th>
+		    </tr>
+		  </thead>
+		  <tbody class="text-center">
+		    <tr th:each="site : ${listSites}">
+		      <th scope="row" th:text = "${site.siteId}">N°</th>
+		      <td th:text = "${site.siteNom}">Lieu</td>
+		      <td th:text = "${site.siteRegion}">Région</td>
+		      <td th:text = "${site.nbSecteur}">Région</td>
+		      <td th:text = "${site.nbVoie}">nbVoie</td>
+		      <td th:text = "${site.rangeCotation}">Cotation</td>
+		      <td><a href="">Détail</a></td>   
+		    </tr>
+		  </tbody>
+		</table>
+	</div>
+	
+
 </div>
 
-<div class="row justify-content-center">
-<div class="col-11">
-	<table class="table">
-	  <thead class="thead-dark text-center">
-	    <tr>
-	      <th scope="col">N°</th>
-	      <th scope="col">Lieu</th>
-	      <th scope="col">Région</th>
-	      <th scope="col">Nombre de secteurs</th>
-	      <th scope="col">Nombre de voies</th>
-	      <th scope="col">Cotation</th>
-	      <th scope="col">Voir la fiche</th>
-	    </tr>
-	  </thead>
-	  <tbody class="text-center">
-	    <tr th:each="site : ${listSites}">
-	      <th scope="row" th:text = "${site.id_site}">N°</th>
-	      <td th:text = "${site.nomSite}">Lieu</td>
-	      <td th:text = "${site.region}">Région</td>
-	      <td th:text = "${site.nbSecteur}">nbSecteur</td>
-	      <td th:text = "${site.nbVoie}">nbVoie</td>
-	      <td th:text = "${site.cotation}">Cotation</td>
-	      <td><a href="">Détail</a></td>    
-	    </tr>    
-	  </tbody>
-	</table>
-</div>
-</div>
-</div>
+
 
 <!-- Footer -->
 <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
