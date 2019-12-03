@@ -1,0 +1,51 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- Meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width = device-width, initial-scale = 1, shrink-to-fit = no">
+
+
+<!-- include css in the header -->
+<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+
+
+<title>Site d'Escalade</title>
+</head>
+
+<body>
+
+
+<div th:fragment="header">
+<nav class="navbar navbar-expand-sm bg-light justify-content-center" >
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="#">Accueil</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Recherche</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Site</a>
+    </li>
+      <li class="nav-item">
+      <a class="nav-link" href="#">Liste TOPO</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">S'inscrire</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Se connecter</a>
+    </li>
+  </ul>
+</nav>
+</div>
+
+ 
+
+
+<!-- include javascript in the footer -->
+<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+</body>
+</html>
