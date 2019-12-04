@@ -17,6 +17,9 @@ public class SiteService {
 	@Autowired
 	private SiteRepository siteRepository;
 	
+	void insertSite(String nom_site, String region) {
+		siteRepository.insertSite(nom_site, region);
+	}
 	
 	public List<SiteDto> fetchSites(){
 		return siteRepository.fetchSites();

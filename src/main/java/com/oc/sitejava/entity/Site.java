@@ -41,7 +41,7 @@ public class Site implements Serializable {
 		this.listSecteurs = listSecteurs;
 	}
 
-	protected Site() {		
+	public Site() {		
 	}
 
 	@Id

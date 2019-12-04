@@ -6,11 +6,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.oc.sitejava.dto.SiteDto;
+import com.oc.sitejava.entity.Site;
 import com.oc.sitejava.service.SecteurService;
 import com.oc.sitejava.service.SiteService;
 import com.oc.sitejava.service.VoieService;
@@ -54,5 +56,12 @@ public class SiteController {
 		
 	}
 	
+	@RequestMapping("/createsite")
+	public String showNewSiteForm(Model model) {
+		Site site = new Site();
+		model.addAttribute("site", site);
+		
+		return "createsite";
+	}
 
 }

@@ -28,6 +28,10 @@ public class VoieService {
 		return voieRepository.findAll();
 	}
 	
+	public void save(Voie voie) {
+		voieRepository.save(voie);
+	}
+	
 	public Voie get(int id_voie) {
 		return voieRepository.findById(id_voie).get();
 	}
