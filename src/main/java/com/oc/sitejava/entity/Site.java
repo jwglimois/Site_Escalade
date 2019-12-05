@@ -24,7 +24,7 @@ public class Site implements Serializable {
 	private int id_site;
 	
 	@Column(name="nom_site")
-	private String nomSite;
+	private String nom_site;
 	
 	@Column(name="region")
 	private String region;
@@ -44,8 +44,7 @@ public class Site implements Serializable {
 	public Site() {		
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
 	public int getId_site() {
 		return id_site;
 	}
@@ -54,12 +53,12 @@ public class Site implements Serializable {
 		this.id_site = id_site;
 	}
 
-	public String getNomSite() {
-		return nomSite;
+	public String getNom_site() {
+		return nom_site;
 	}
 
-	public void setNomSite(String nomSite) {
-		this.nomSite = nomSite;
+	public void setNom_site(String nom_site) {
+		this.nom_site = nom_site;
 	}
 	
 	public String getRegion() {
@@ -68,6 +67,14 @@ public class Site implements Serializable {
 
 	public void setRegion(String region) {
 		this.region = region;
+	}
+
+	public Site(int id_site, String nom_site, String region, List<Secteur> listSecteurs) {
+		super();
+		this.id_site = id_site;
+		this.nom_site = nom_site;
+		this.region = region;
+		this.listSecteurs = listSecteurs;
 	}
 
 

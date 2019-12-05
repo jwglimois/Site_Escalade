@@ -49,7 +49,7 @@ public class Voie {
 		this.secteur = secteur;
 	}
 
-	protected Voie() {	
+	public Voie() {	
 	}
 	
 	

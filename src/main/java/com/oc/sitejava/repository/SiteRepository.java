@@ -11,13 +11,12 @@ import com.oc.sitejava.dto.SiteDto;
 import com.oc.sitejava.entity.Site;
 
 public interface SiteRepository extends JpaRepository<Site, Integer >{
-	@Query("SELECT DISTINCT new com.oc.sitejava.dto.SiteDto (s.id_site ,s.nomSite, s.region) "
+	@Query("SELECT DISTINCT new com.oc.sitejava.dto.SiteDto (s.id_site ,s.nom_site, s.region) "
 			+ "FROM Site s INNER JOIN s.listSecteurs sr")
 	List<SiteDto> fetchSites();
 	
-	@Modifying
-	@Query(value = "INSERT INTO site (nom_site, region) VALUES (:nom_site, :region)",
-	  		nativeQuery = true)
-	void insertSite(@Param("nom_site") String nom_site, @Param("region") String region);
+	@Query(value = "SELECT id_site FROM site ORDER BY id_site DESC LIMIT 1",
+			nativeQuery = true)
+	Integer fetchLastIDSite();
 	
 }

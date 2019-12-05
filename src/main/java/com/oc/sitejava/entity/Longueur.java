@@ -30,7 +30,7 @@ public class Longueur {
 	@JoinColumn(name="id_voie")
 	private Voie voie;
 	
-	protected Longueur() {
+	public Longueur() {
 	}
 
 	
@@ -48,6 +48,16 @@ public class Longueur {
 
 	public void setHauteur(int hauteur) {
 		this.hauteur = hauteur;
+	}
+
+
+	public Voie getVoie() {
+		return voie;
+	}
+
+
+	public void setVoie(Voie voie) {
+		this.voie = voie;
 	}
 
 	

@@ -38,7 +38,7 @@ public class Secteur {
 	@OneToMany(mappedBy="secteur",cascade = CascadeType.ALL)
 	private List<Voie> listVoie;
 	
-	protected Secteur() {		
+	public Secteur() {		
 	}
 
 	

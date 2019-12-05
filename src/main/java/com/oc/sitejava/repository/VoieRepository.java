@@ -28,5 +28,5 @@ public interface VoieRepository extends JpaRepository<Voie, Integer>{
 	@Modifying
 	@Query(value = "INSERT INTO voie (nom_voie, cotation) VALUES (:nom_voie, :cotation)",
 	  		nativeQuery = true)
-	void insertSecteur(@Param("nom_voie") String nom_voie, @Param("cotatoin") String cotation);
+	void insertVoie(@Param("nom_voie") String nom_voie, @Param("cotation") String cotation);
 }
