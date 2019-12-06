@@ -1,12 +1,12 @@
 package com.oc.sitejava.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,11 +44,15 @@ public class SiteController {
 	}
 	
 	@RequestMapping(value={"/listsites"}, method = RequestMethod.GET)
-	public ModelAndView viewListSites() {
+	public ModelAndView viewListSites(){
 		
 		ModelAndView modelAndView = new ModelAndView();
 		
-		List<SiteDto> listSites =  siteService.fetchSites();
+		List<SiteDto> listSites = new ArrayList<SiteDto>();
+				
+		for(SiteDto ligne : siteService.fetchSites()) {
+			listSites.add(ligne);
+		}
 		
 		for(SiteDto ligne : listSites) {
 			ligne.setNbSecteur(secteurService.fetchNbSecteur(ligne.getSiteId()));
@@ -103,5 +107,17 @@ public class SiteController {
 		
 		return "redirect:/";
 	}
+	
+	@RequestMapping(value={"/login"}, method = RequestMethod.GET)
+    public String login(Model model) {
+        return "login";
+    }
+	
+	@GetMapping("/user")
+    public String userIndex() {
+        return "user/index";
+    }
+	
+	
 
 }
