@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- Meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width = device-width, initial-scale = 1, shrink-to-fit = no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+
+
+<title>Inscription</title>
+</head>
+
+<body>
+
+<!-- Menu -->
+<div th:replace="menu :: header">
+</div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+
+			<div th:if="${param.success}">
+				<div class="alert alert-info">Vous avez réussi l'inscription</div>
+			</div>
+			<div th:if="${param.error}">
+				<div class="alert alert-danger">Inscription échouée car il y a déjà un compte enregistré avec cet email!</div>
+			</div>
+
+			<h1>Inscription</h1>
+			<form th:action="@{/inscription}" th:object="${userDto}" onsubmit="return confirmFeild()" method="post">
+
+				<div class="form-group">
+					<label for="prenom" class="control-label">Prénom</label> 
+					<input id="prenom" class="form-control" th:field="*{utilisateur.prenom}" required />
+				</div>
+				<div class="form-group">
+					<label for="nom" class="control-label">Nom</label> 
+					<input id="nom" class="form-control" th:field="*{utilisateur.nom}" required />
+				</div>
+				<div class="form-group">
+					<label for="email" class="control-label">Email</label> 
+					<input id="email" class="form-control" th:field="*{utilisateur.email}" required />
+				</div>
+				<div class="form-group">
+					<label for="confirmEmail" class="control-label">Confirmer email</label> 
+					<input id="confirmEmail" class="form-control"  required />
+				</div>
+				<div class="form-group">
+					<label for="password" class="control-label">Password</label> 
+					<input id="password" class="form-control" type="password" th:field="*{utilisateur.password}" required/>
+				</div>
+				<div class="form-group">
+					<label for="confirmPassword" class="control-label">Confirm password</label> 
+					<input id="confirmPassword" class="form-control" type="password"  required/>
+				</div>
+				<div class="form-group">
+					<span>Role</span>
+					<select th:field="*{role.type}">
+						  <option value = "utilisateur">utilisateur</option>
+						  <option value = "membre">membre</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-success">S'inscrire</button>
+					<span>Déjà inscrit? <a href="/" th:href="@{/login}">Se connecter ici</a></span>
+				</div>
+				
+
+			</form>
+		</div>
+	</div>
+</div>
+
+ 
+
+
+<!-- Footer -->
+<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script type="text/javascript">
+    function confirmFeild() {
+        var email = document.getElementById("email").value
+        var confEmail = document.getElementById("confirmEmail").value
+        if(email != confEmail) {
+            alert('2 emails différents !');
+        }
+        var pass = document.getElementById("password").value
+        var confPass = document.getElementById("confirmPassword").value
+        if(pass != confPass) {
+            alert('2 passwords différents !');
+        }
+    }
+</script>
+</body>
+</html>
