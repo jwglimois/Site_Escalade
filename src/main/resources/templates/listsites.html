@@ -49,10 +49,14 @@
 		</table>
 	</div>
 	
+	
+	
 
 </div>
 
-
+<ul th:each="mySession : ${infoSession}">
+	<li th:text="${mySession}" th:unless="${session == null}">username</li>
+</ul>
 
 <!-- Footer -->
 <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>

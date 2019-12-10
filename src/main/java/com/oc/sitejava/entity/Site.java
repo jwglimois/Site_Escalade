@@ -1,6 +1,5 @@
 package com.oc.sitejava.entity;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Access;
@@ -16,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="site")
-public class Site implements Serializable {
+public class Site  {
 	
 	@Id
 	@Column(name = "id_site")
