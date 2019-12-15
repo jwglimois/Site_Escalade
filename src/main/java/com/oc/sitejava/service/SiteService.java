@@ -7,9 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.oc.sitejava.dto.SiteDto;
 import com.oc.sitejava.entity.Site;
-import com.oc.sitejava.repository.SecteurRepository;
 import com.oc.sitejava.repository.SiteRepository;
-import com.oc.sitejava.repository.VoieRepository;
 
 @Service
 public class SiteService {

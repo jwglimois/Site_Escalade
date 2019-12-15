@@ -2,6 +2,8 @@ package com.oc.sitejava.entity;
 
 
 
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,17 +11,26 @@ import javax.persistence.*;
 public class Utilisateur {
 	
 	@Id
+	@Column(name="id_user")
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private int id_user;
+	
 	private String nom;
+	
 	private String prenom;
+	
 	private String email;
+	
 	private int id_role;
 	
 	private String password;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	 private Role role = new Role();
+	private Role role = new Role();
+	
+	@Access(AccessType.FIELD)
+	@OneToMany (mappedBy = "utilisateur", cascade = CascadeType.MERGE)
+	private List<Commentaire> listCom;
 	
 	public Utilisateur() {super();}
 
@@ -105,6 +116,14 @@ public class Utilisateur {
 	public String toString() {
 		return "Utilisateur [id_user=" + id_user + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email
 				+ ", id_role=" + id_role + ", password=" + password + ", role=" + role + "]";
+	}
+
+	public List<Commentaire> getListCom() {
+		return listCom;
+	}
+
+	public void setListCom(List<Commentaire> listCom) {
+		this.listCom = listCom;
 	}
 
 	

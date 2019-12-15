@@ -16,7 +16,14 @@
 
 <div th:replace="menu :: header">
 </div>
-
+<div th:if="${param.logout}">
+	<div class="alert alert-info row justify-content-center">Vous êtes maintenant déconnecté!</div>
+</div>
+<div th:if="${param.successSite}">
+	<div class="alert alert-info row justify-content-center">Votre site a été créé.</div>
+	<a href="/escalade/listsites" style="font-size:18px; text-align: center"><b>Voir la liste des sites</b></a>
+</div>
+<br>
 <div class="container-fluid">
   <h3>OC Escalade</h3>
   <p>Bienvenue sur le site de OC Escalade.</p>

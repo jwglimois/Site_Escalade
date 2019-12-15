@@ -22,7 +22,13 @@ public class VoieService {
 		return voieRepository.fetchCotations(id_site);
 	}
 	
-
+	public Integer getTotalHauteur(Integer id_voie) {
+		return voieRepository.getTotalHauteur(id_voie);
+	}
+	
+	public Integer getNbLongueur(Integer id_voie) {
+		return voieRepository.getNbLongueur(id_voie);
+	}
 	
 	public List<Voie> listAll(){
 		return voieRepository.findAll();

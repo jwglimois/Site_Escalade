@@ -21,6 +21,10 @@ public class UserService {
 		return userRepository.findByEmail(email);
 	}
 	
+	public Utilisateur getUserByFirstName(String prenomUser) {
+		return userRepository.getUserByFirstName(prenomUser);
+	}
+	
 	public List<Utilisateur> listAll(){
 		return userRepository.findAll();
 	}

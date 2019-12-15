@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- Meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width = device-width, initial-scale = 1, shrink-to-fit = no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+
+<title>Voie</title>
+</head>
+
+<body>
+<div th:replace="menu :: header">
+</div>
+<br>
+<h3 style="text-align:center">Voies de vos secteurs:</h3>
+<br>
+<div class="row justify-content-center">
+	<div class="col-5 align-self-center">
+		<form action="#" th:action="@{/saveVoie}"  th:object = "${voieDto}" method="post">
+		<table style="border-collapse: separate; border-spacing: 10px;">
+			<tr>
+				<td style="font-weight:bold">Nom du secteur: </td>
+				<td th:text="*{secteur1.nomSecteur}" /></td>
+			</tr>
+			<tr>
+				<td>Nom de la Voie 1: </td>
+				<td><input type="text" th:field="*{voie1.nomVoie}" /></td>
+			</tr>
+			<tr>
+				<td>Cotation de la Voie 1:  </td>
+				<td><input type="text"  th:field="*{voie1.cotation}" /></td>
+			</tr>
+			<tr>
+				<td>Nom de la Voie 2: </td>
+				<td><input type="text" th:field="*{voie2.nomVoie}" /></td>
+			</tr>
+			<tr>
+				<td>Cotation de la Voie 2:  </td>
+				<td><input type="text"  th:field="*{voie2.cotation}" /></td>
+			</tr>	
+				<tr>
+				<td style="font-weight:bold" >Nom du secteur: </td>
+				<td th:if="*{secteur2 != null}" th:text="*{secteur2.nomSecteur}" /></td>
+			</tr>
+			<tr>
+				<td>Nom de la Voie 1:  </td>
+				<td><input type="text" th:if="*{secteur2 != null}"  th:field="*{voie3.nomVoie}" /></td>
+			</tr>
+			<tr>
+				<td>Cotation de la Voie 1:  </td>
+				<td><input type="text" th:if="*{secteur2 != null}"  th:field="*{voie3.cotation}" /></td>
+			</tr>
+			<tr>
+				<td>Nom de la Voie 2:  </td>
+				<td><input type="text" th:if="*{secteur2 != null}"  th:field="*{voie4.nomVoie}" /></td>
+			</tr>
+			<tr>
+				<td>Cotation de la Voie 2:  </td>
+				<td><input type="text" th:if="*{secteur2 != null}"  th:field="*{voie4.cotation}" /></td>
+			</tr>	
+			<tr>
+				<td style="font-weight:bold" >Nom du secteur: </td>
+				<td th:if="*{secteur3 != null}"  th:text="*{secteur3.nomSecteur}" /></td>
+			</tr>
+			<tr>
+				<td>Nom de la Voie 1:  </td>
+				<td><input type="text" th:if="*{secteur3 != null}"  th:field="*{voie5.nomVoie}" /></td>
+			</tr>
+			<tr>
+				<td>Cotation de la Voie 1:  </td>
+				<td><input type="text" th:if="*{secteur3 != null}"  th:field="*{voie5.cotation}" /></td>
+			</tr>
+			<tr>
+				<td>Nom de la Voie 2:  </td>
+				<td><input type="text" th:if="*{secteur3 != null}" th:field="*{voie6.nomVoie}" /></td>
+			</tr>
+			<tr>
+				<td>Cotation de la Voie 2:  </td>
+				<td><input type="text" th:if="*{secteur3 != null}"  th:field="*{voie6.cotation}" /></td>
+			</tr>	
+			<tr>
+				<td colspan="2"><button type="submit">Valider</button></td>
+			</tr>
+		</table>	
+	</form>
+	</div>
+</div>
+
+
+</body>
+</html>

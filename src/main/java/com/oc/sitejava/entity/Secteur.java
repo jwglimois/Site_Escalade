@@ -42,6 +42,12 @@ public class Secteur {
 	}
 
 	
+	public Secteur(String nomSecteur) {
+		super();
+		this.nomSecteur = nomSecteur;
+	}
+
+
 	public List<Voie> getListVoie() {
 		return listVoie;
 	}
@@ -75,5 +81,18 @@ public class Secteur {
 		this.nomSecteur = nomSecteur;
 	}
 
+	public boolean isEmpty() {
+	     if (nomSecteur==null) 
+	        return true;
+	     else 
+	        return false;
+	    }
+
+
+	@Override
+	public String toString() {
+		return "Secteur [-------id_secteur=" + id_secteur + ", nomSecteur=" + nomSecteur + ", site=" + site + ", listVoie="
+				+ listVoie + "----------]";
+	}
 	
 }

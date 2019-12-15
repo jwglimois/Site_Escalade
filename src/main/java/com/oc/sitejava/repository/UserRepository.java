@@ -12,7 +12,6 @@ import com.oc.sitejava.entity.Utilisateur;
 @Repository
 public interface UserRepository extends JpaRepository < Utilisateur, Integer > {
 	
-	Utilisateur findByEmail(String email);
 	
 	@Modifying
     @Query(value = "insert into utilisateur (nom, prenom, email, password, id_role) VALUES (:nom, :prenom, :email, :password, :id_role)", nativeQuery = true)
@@ -22,4 +21,11 @@ public interface UserRepository extends JpaRepository < Utilisateur, Integer > {
     					@Param("email") String email,
     					@Param("password") String password, 
     					@Param("id_role") int id_role);
+	
+	
+	Utilisateur findByEmail(String email);
+	
+	@Query("select new com.oc.sitejava.entity.Utilisateur (u.id_user, u.nom, u.prenom, u.email, u.password) "
+			+ " from Utilisateur u where u.prenom = ?1")
+	Utilisateur getUserByFirstName(String prenomUser);
 }

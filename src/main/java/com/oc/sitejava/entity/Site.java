@@ -32,6 +32,10 @@ public class Site  {
 	@OneToMany (mappedBy = "site", cascade = CascadeType.ALL)
 	private List<Secteur> listSecteurs;
 	
+	@Access(AccessType.FIELD)
+	@OneToMany (mappedBy = "site", cascade = CascadeType.ALL)
+	private List<Commentaire> listCom;
+	
 	public List<Secteur> getlistSecteurs() {
 		return listSecteurs;
 	}
@@ -74,6 +78,28 @@ public class Site  {
 		this.nom_site = nom_site;
 		this.region = region;
 		this.listSecteurs = listSecteurs;
+	}
+
+	@Override
+	public String toString() {
+		return "Site [---------id_site=" + id_site + ", nom_site=" + nom_site + ", region=" + region + ", listSecteurs="
+				+ listSecteurs + "--------------]";
+	}
+
+	public List<Secteur> getListSecteurs() {
+		return listSecteurs;
+	}
+
+	public void setListSecteurs(List<Secteur> listSecteurs) {
+		this.listSecteurs = listSecteurs;
+	}
+
+	public List<Commentaire> getListCom() {
+		return listCom;
+	}
+
+	public void setListCom(List<Commentaire> listCom) {
+		this.listCom = listCom;
 	}
 
 

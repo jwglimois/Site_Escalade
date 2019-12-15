@@ -19,9 +19,14 @@
 
 
 <div class="row justify-content-center">
-<br>
-<p><a href="createsite">Créer un nouveau site</a></p>
-<br>
+<div th:each="mySession, iStat : ${infoSession}">
+	<div >
+		<p><a th:if="${mySession} == '1' or ${mySession} == '2' " th:href="@{/createsite}">Créer un nouveau site</a></p>
+	</div>
+	<div th:if="${iStat.index == 1}" >
+		<input id="prenomUser" type="hidden"  th:name="${mySession}" />
+	</div>
+</div>
 	<div class="col-11">
 		<table class="table">
 		  <thead class="thead-dark text-center">
@@ -43,20 +48,14 @@
 		      <td th:text = "${site.nbSecteur}">Région</td>
 		      <td th:text = "${site.nbVoie}">nbVoie</td>
 		      <td th:text = "${site.rangeCotation}">Cotation</td>
-		      <td><a href="">Détail</a></td>   
+		      <td><a th:href="@{/{id} (id=${site.siteId})}">Détail</a></td>   
 		    </tr>
 		  </tbody>
 		</table>
 	</div>
-	
-	
-	
 
 </div>
 
-<ul th:each="mySession : ${infoSession}">
-	<li th:text="${mySession}" th:unless="${session == null}">username</li>
-</ul>
 
 <!-- Footer -->
 <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>

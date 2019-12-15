@@ -10,21 +10,123 @@
 
 <title>Fiche Site</title>
 </head>
+<style>
+	hr {
+    border: none;
+    border-top: 3px double #333;
+    color: #333;
+    overflow: visible;
+    text-align: center;
+    height: 5px;
+}
+
+hr:after {
+    background: #fff;
+    padding: 0 4px;
+    position: relative;
+    top: -13px;
+}
+</style>
 
 <body>
 
 <div th:replace="menu :: header">
 </div>
 
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-7">
-      One of three columns
+
+<div class="row justify-content-center pt-3"> 		
+    <div class="col-6" >
+    	<div class="row">
+    		<div class="col-8" th:object="${comDto}" >
+    		<p class="text-dark">N° Site : <span class="text-info" th:text="*{id_site}"  ></span></p>
+	  		<p class="text-dark">Nom du site : <span class="text-info"  th:text="${site.nom_site}"></span></p>
+	  		<p class="text-dark">Région du site : <span class="text-info" th:text="${site.region}"></span></p>
+	  		</div>
+	  		<div class="col-4" >
+	  		</div>
+    	</div>
+    	<hr>
+    	<div th:each ="secteur , iStat : ${listSecteur}">
+    		<p class="text-dark">Nom du secteur: <span class="text-info" th:text="${secteur.nomSecteur}"></span></p>	
+    			<ul th:if="${iStat.index == 0 }" th:each="vs1 : ${listVoieDto1}">
+    				<li class="text-dark">Nom de la voie: 
+    					<span class="text-danger" th:text="${vs1.nomVoie}"></span>
+    					<span>, Hauteur: </span>
+    					<span class="text-danger" th:text="${vs1.hauteurVoie}"></span>
+    					<span> &nbsp; m , nombre de longueur: </span>
+    					<span class="text-danger" th:text="${vs1.nbLongueur}"></span>
+    					<span>, cotation: </span>
+    					<span class="text-danger" th:text="${vs1.coteVoie}"></span>
+    				</li>
+    			</ul>
+    			<ul th:if="${iStat.index == 1 }" th:each="vs2 : ${listVoieDto2}">
+    				<li class="text-dark">Nom de la voie: 
+    					<span class="text-danger" th:text="${vs2.nomVoie}"></span>
+    					<span>, Hauteur: </span>
+    					<span class="text-danger" th:text="${vs2.hauteurVoie}"></span>
+    					<span>, nombre de longueur: </span>
+    					<span class="text-danger" th:text="${vs2.nbLongueur}"></span>
+    					<span>, cotation: </span>
+    					<span class="text-danger" th:text="${vs2.coteVoie}"></span>
+    				</li>
+    			</ul>
+    			<ul th:if="${iStat.index == 2 }" th:each="vs3 : ${listVoieDto3}">
+    				<li class="text-dark">Nom de la voie: 
+    					<span class="text-danger" th:text="${vs3.nomVoie}"></span>
+    					<span>, Hauteur: </span>
+    					<span class="text-danger" th:text="${vs3.hauteurVoie}"></span>
+    					<span>, nombre de longueur: </span>
+    					<span class="text-danger" th:text="${vs3.nbLongueur}"></span>
+    					<span>, cotation: </span>
+    					<span class="text-danger" th:text="${vs3.coteVoie}"></span>
+    				</li>
+    			</ul>
+    		<hr>
+       </div>
     </div>
-    <div class="col-4">
-      One of three columns
+    <div class="col-5 bg-light" >
+	    <div >
+	    <br><h3>Commentaires</h3><br>
+	      <table class="table">
+	     	<thead class="border-bottom">
+	     		<tr>
+					<th scope="col">Date</th>
+	     			<th scope="col">Ecrit par</th>	
+	     			<th scope="col">Commentaire</th>
+	     		
+	     		</tr>
+	     	</thead>
+	     	<tbody class="border-bottom">
+	     		<tr th:each="com: ${listCom}">
+	     			<td th:text = "${com.date_creation}"></td>
+	     			<td th:text = "${com.utilisateur.prenom}"></td>
+	     			<td th:text = "${com.message}"></td>
+	     			<td th:each="mySession, iStat: ${infoSession}">
+	     				<div th:if="${mySession}=='2'">
+		     				<a th:href="@{/edit/{id} (id=${com.id_commentaire})}">Editer</a>
+		     				&nbsp;&nbsp;&nbsp;&nbsp;
+		     				<a th:href="@{/delete/{id} (id=${com.id_commentaire})}">Supprimer</a>
+	     				</div>
+	     			</td>
+	     		</tr>
+	     	</tbody>
+	      </table>
+	    </div>
+	    <br>
+	    <h4>Laisser un commentaire</h4>
+	    <br>
+	    <div th:each="mySession: ${infoSession}">
+		    <form class="border border-info" th:if="${mySession} == '1' or ${mySession} == '2'" 
+		      		th:action="@{/saveComment(idSite=*{id_site})}" th:object = "${comDto}" method="post">
+				  <div class="form-group">
+				    <textarea id="textarea" class="form-control" th:field="*{message}">Laissez vos commentaires</textarea>
+				  </div>
+				  <div class="text-center">
+				  	<button type="submit" class="btn btn-primary">Envoyer</button>
+				  </div>	  
+			</form>
+	    </div>
     </div>
-  </div>
 </div>
 
 

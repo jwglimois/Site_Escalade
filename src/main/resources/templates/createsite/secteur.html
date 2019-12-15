@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- Meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width = device-width, initial-scale = 1, shrink-to-fit = no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+
+<title>Secteur</title>
+</head>
+
+<body>
+<div th:replace="menu :: header">
+</div>
+<br>
+<h3 style="text-align:center">Secteurs de votre site:</h3>
+<br>
+<div class="row justify-content-center">
+	<div class="col-5 align-self-center">
+	<form action="#" th:action="@{/saveSecteur}"  th:object = "${secteurDto}" method="post">
+		<table style="border-collapse: separate; border-spacing: 10px;">
+			<tr>
+				<td>Nom du site: </td>
+				<td th:text="*{site.nom_site}" /></td>
+			</tr>
+			<tr>
+				<td>Secteur 1: </td>
+				<td><input type="text" th:field="*{secteur1.nomSecteur}" /></td>
+			</tr>
+				<tr>
+				<td>Secteur 2: </td>
+				<td><input type="text" th:field="*{secteur2.nomSecteur}" /></td>
+			</tr>	
+				<tr>
+				<td>Secteur 3: </td>
+				<td><input type="text" th:field="*{secteur3.nomSecteur}" /></td>
+			</tr>			
+			<tr>
+				<td colspan="2"><button type="submit">Valider</button></td>
+			</tr>
+		</table>	
+	</form>
+	</div>
+</div>
+
+
+</body>
+</html>

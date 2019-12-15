@@ -9,14 +9,20 @@ public class SiteDto {
 	private String rangeCotation;
 	
 	
+	
+	public SiteDto() {
+		super();
+	}
+
+
+
 	public SiteDto(int siteId, String siteNom, String siteRegion) {
 		super();
 		this.siteId = siteId;
 		this.siteNom = siteNom;
 		this.siteRegion = siteRegion;
 	
-	}
-	
+	}	
 	
 
 	public SiteDto(int siteId, String siteNom, String siteRegion, int nbSecteur, int nbVoie, String rangeCotation) {
@@ -31,6 +37,13 @@ public class SiteDto {
 
 
 	
+
+	public SiteDto(int siteId) {
+		super();
+		this.siteId = siteId;
+	}
+
+
 
 	public String getRangeCotation() {
 		return rangeCotation;
@@ -86,7 +99,8 @@ public class SiteDto {
 	public void setSiteRegion(String siteRegion) {
 		this.siteRegion = siteRegion;
 	}
-	
+
+
 	
 
 }

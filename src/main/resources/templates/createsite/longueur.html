@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- Meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width = device-width, initial-scale = 1, shrink-to-fit = no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+
+<title>Longueur</title>
+</head>
+
+<body>
+<div th:replace="menu :: header">
+</div>
+<br>
+<h3 style="text-align:center">Longueurs de vos voies:</h3>
+<br>
+<div class="row justify-content-center">
+	<div class="col-5 align-self-center">
+<form action="#" th:action="@{/saveLongueur}"  th:object = "${longueurDto}" method="post">
+		<table style="border-collapse: separate; border-spacing: 10px;">
+			<tr>
+				<td style="font-weight:bold">Nom de la Voie: </td>
+				<td th:text="*{voie1.nomVoie}" /></td>
+			</tr>
+			<tr>
+				<td>Hauteur de tous les longueurs en mètre (format ex: 10, 20, 30 ): </td>
+				<td><input type="text" th:field="*{toutHauteur1}" /></td>
+			</tr>
+			<tr>
+				<td style="font-weight:bold">Nom de la Voie: </td>
+				<td th:text="*{voie2.nomVoie}" /></td>
+			</tr>
+			<tr>
+				<td>Hauteur de tous les longueurs en mètre (format ex: 10, 20, 30 ): </td>
+				<td><input type="text" th:field="*{toutHauteur2}" /></td>
+			</tr>
+			<tr>
+				<td style="font-weight:bold">Nom de la Voie: </td>
+				<td th:text="*{voie3.nomVoie}" /></td>
+			</tr>
+			<tr>
+				<td>Hauteur de tous les longueurs en mètre (format ex: 10, 20, 30 ): </td>
+				<td><input type="text" th:field="*{toutHauteur3}" /></td>
+			</tr>
+			<tr>
+				<td style="font-weight:bold">Nom de la Voie: </td>
+				<td th:text="*{voie4.nomVoie}" /></td>
+			</tr>
+			<tr>
+				<td>Hauteur de tous les longueurs en mètre (format ex: 10, 20, 30 ): </td>
+				<td><input type="text" th:field="*{toutHauteur4}" /></td>
+			</tr>
+			<tr>
+				<td style="font-weight:bold">Nom de la Voie: </td>
+				<td th:text="*{voie5.nomVoie}" /></td>
+			</tr>
+			<tr>
+				<td>Hauteur de tous les longueurs en mètre (format ex: 10, 20, 30 ): </td>
+				<td><input type="text" th:field="*{toutHauteur5}" /></td>
+			</tr>
+			<tr>
+				<td style="font-weight:bold">Nom de la Voie: </td>
+				<td th:text="*{voie6.nomVoie}" /></td>
+			</tr>
+			<tr>
+				<td>Hauteur de tous les longueurs en mètre (format ex: 10, 20, 30 ): </td>
+				<td><input type="text" th:field="*{toutHauteur6}" /></td>
+			</tr>						
+			<tr>
+				<td colspan="2"><button type="submit">Valider</button></td>
+			</tr>
+		</table>	
+	</form>
+	</div>
+</div>
+
+
+</body>
+</html>
