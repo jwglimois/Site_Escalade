@@ -345,20 +345,20 @@ public class SessionController {
 	
 	@RequestMapping(value = "/modifyComment/{idCom}", method = RequestMethod.POST)
 	public String modifyComment(
-			@ModelAttribute(value="comment") Commentaire comment,
+			@ModelAttribute(value="comDto") CommentDto comDto,
 			@PathVariable("idCom") Integer idCom, 
 			Model model) {
 		
-		comment = comService.get(idCom);
+		Commentaire comment = comService.get(idCom);
 		int newId_user = (int)comment.getUtilisateur().getId_user();
 		System.out.println("value de newUd_user is:-------" + newId_user );
 		int idSite = comment.getSite().getId_site();
 		String newMessage = new String();
-		CommentDto comDto = new CommentDto(newId_user, comment, newMessage);
+		comDto = new CommentDto(newId_user, comment, newMessage);
 		model.addAttribute("comDto", comDto);
 		model.addAttribute("newId_user", newId_user);
 		model.addAttribute("newMessage", newMessage);
-		model.addAttribute("comment", comment);
+		
 		
 		
 		System.out.println("value de newMessage is:-------" + newMessage );
