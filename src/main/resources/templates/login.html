@@ -51,17 +51,6 @@
 				</div>
 				
 			</form>
-				<div>
-				<h2>Messages</h2>
-				<ul th:each="mySession : ${infoSession}">
-					<li th:text="${mySession}" th:unless="${session == null}">username</li>
-				</ul>
-				</div>
-				<div>
-					<form th:action="@{/destroy}" method="post">
-						<input type="submit" value="Destroy Session" />
-					</form>
-				</div>
 						
 	</div>
 </div>

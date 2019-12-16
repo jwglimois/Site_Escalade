@@ -38,9 +38,19 @@ hr:after {
     <div class="col-6" >
     	<div class="row">
     		<div class="col-8" th:object="${comDto}" >
-    		<p class="text-dark">N° Site : <span class="text-info" th:text="*{id_site}"  ></span></p>
-	  		<p class="text-dark">Nom du site : <span class="text-info"  th:text="${site.nom_site}"></span></p>
-	  		<p class="text-dark">Région du site : <span class="text-info" th:text="${site.region}"></span></p>
+    			<div class="row">
+    				<div class="col-8">
+			    		<p class="text-dark">N° Site : <span class="text-info" th:text="*{id_site}"  ></span></p>
+				  		<p class="text-dark">Nom du site : <span class="text-info"  th:text="${site.nom_site}"></span></p>
+				  		<p class="text-dark">Région du site : <span class="text-info" th:text="${site.region}"></span></p>
+	  				</div>
+	  				<div class="col-3 form-check" th:each="mySession : ${infoSession}" th:if="${mySession} == '2'">
+	  					<button style="color:red; font-weight:bold" class="bouton" id="bouton_texte" onclick="javascript:afficher_cacher('texte');" >Taguer</button>
+		  					<div id="texte" class="texte" style="color:green">
+							    Officiel Les amis de l’escalade
+							</div>
+	  				</div>
+	  			</div>
 	  		</div>
 	  		<div class="col-4" >
 	  		</div>
@@ -83,6 +93,34 @@ hr:after {
     			</ul>
     		<hr>
        </div>
+	    <div>
+	    	<h4 class="text-success">Topo disponible</h4><br>
+				<table class="table" >
+			     	<thead class="border-bottom">
+			     		<tr>
+							<th scope="col">N° Topo</th>
+			     			<th scope="col">Nom de Topo</th>	
+			     			<th scope="col">Description</th>
+			     			<th scope="col">Date de parution</th>	
+			     			<th scope="col">Statut</th>		     		
+			     		</tr>
+			     	</thead>
+			     	<tbody class="border-bottom">
+			     		<tr th:each="topo: ${listTopo}">
+			     			<td th:text="${topo.id_topo}">id_topo</td>
+			     			<td th:text="${topo.nom_topo}">nom_topo</td>
+			     			<td th:text="${topo.description}">description</td>
+			     			<td th:text="${topo.date_parution}">date parution</td>
+			     			<td th:text="${topo.statut}">statut</td>
+			     			<td th:each="mySession: ${infoSession}">
+			     				<div th:if="${mySession} =='1' or ${mySession} =='2'">
+			     					<a th:href="@{/reserver/{idOwner} (idOwner=${topo.proprietaire.id_user})}">Réserver</a>
+			     				</div>
+			     			</td>
+			     		</tr>
+			     	</tbody>
+		      </table>
+	    </div>	
     </div>
     <div class="col-5 bg-light" >
 	    <div >
@@ -133,6 +171,21 @@ hr:after {
 <!-- Footer -->
 <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-
+<script>
+function afficher_cacher(id)
+{
+    if(document.getElementById(id).style.visibility=="hidden")
+    {
+        document.getElementById(id).style.visibility="visible";
+        document.getElementById('bouton_'+id).innerHTML='';
+    }
+    else
+    {
+        document.getElementById(id).style.visibility="hidden";
+        document.getElementById('bouton_'+id).innerHTML='Officiel Les amis de l’escalade';
+    }
+    return true;
+}
+</script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  Dim 15 déc. 2019 à 01:23
+-- Généré le :  lun. 16 déc. 2019 à 11:08
 -- Version du serveur :  5.7.21
 -- Version de PHP :  7.2.4
 
@@ -38,14 +38,8 @@ CREATE TABLE IF NOT EXISTS `commentaire` (
   PRIMARY KEY (`id_commentaire`),
   KEY `FKkgndecm5i0gjb9q0vr7c7qpir` (`id_site`),
   KEY `FKcs6u1s906e16k4ewworhyqbtk` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Déchargement des données de la table `commentaire`
---
-
-INSERT INTO `commentaire` (`id_commentaire`, `date_creation`, `message`, `id_site`, `id_user`) VALUES
-(2, '2019-11-26', 'Je recommande fortement ce site. Il est super!!', 2, 18);
 
 -- --------------------------------------------------------
 
@@ -58,13 +52,6 @@ CREATE TABLE IF NOT EXISTS `hibernate_sequence` (
   `next_val` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Déchargement des données de la table `hibernate_sequence`
---
-
-INSERT INTO `hibernate_sequence` (`next_val`) VALUES
-(22),
-(22);
 
 -- --------------------------------------------------------
 
@@ -79,25 +66,12 @@ CREATE TABLE IF NOT EXISTS `longueur` (
   `id_voie` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_longueur`),
   KEY `FKsntp125c2624k8psbmjo0daru` (`id_voie`)
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Déchargement des données de la table `longueur`
 --
 
-INSERT INTO `longueur` (`id_longueur`, `hauteur`, `id_voie`) VALUES
-(14, 30, 5),
-(15, 30, 5),
-(16, 30, 5),
-(17, 20, 6),
-(18, 20, 6),
-(19, 20, 6),
-(20, 20, 6),
-(21, 10, 7),
-(57, 20, 14),
-(58, 40, 14),
-(59, 30, 15),
-(60, 50, 15);
 
 -- --------------------------------------------------------
 
@@ -110,20 +84,12 @@ CREATE TABLE IF NOT EXISTS `reservation` (
   `id_reservation` int(11) NOT NULL AUTO_INCREMENT,
   `id_topo` int(10) NOT NULL,
   `id_emprunteur` int(10) NOT NULL,
+  `id_user` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_reservation`),
-  KEY `fk_topo` (`id_topo`),
-  KEY `fk_emprunteur` (`id_emprunteur`)
+  KEY `fk_emprunteur` (`id_emprunteur`),
+  KEY `FKiqjwftpb6o2kyu3k45xiemp6c` (`id_user`),
+  KEY `FKrxx2d19vx5ndessah3r5wit0c` (`id_topo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Déchargement des données de la table `reservation`
---
-
-INSERT INTO `reservation` (`id_reservation`, `id_topo`, `id_emprunteur`) VALUES
-(1, 1, 3),
-(2, 2, 3),
-(3, 3, 1),
-(4, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -138,13 +104,6 @@ CREATE TABLE IF NOT EXISTS `role` (
   PRIMARY KEY (`id_role`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Déchargement des données de la table `role`
---
-
-INSERT INTO `role` (`id_role`, `type`) VALUES
-(1, 'utilisateur'),
-(2, 'membre');
 
 -- --------------------------------------------------------
 
@@ -159,17 +118,8 @@ CREATE TABLE IF NOT EXISTS `secteur` (
   `id_site` int(10) NOT NULL,
   PRIMARY KEY (`id_secteur`),
   KEY `FK7ayk0wx98i7qd6d1xstgrexdh` (`id_site`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Déchargement des données de la table `secteur`
---
-
-INSERT INTO `secteur` (`id_secteur`, `nom_secteur`, `id_site`) VALUES
-(3, 'Grand Nord', 2),
-(9, 'Valle d\'Or', 2),
-(18, 'Babylone', 46),
-(19, 'Rouquette', 46);
 
 -- --------------------------------------------------------
 
@@ -183,15 +133,8 @@ CREATE TABLE IF NOT EXISTS `site` (
   `nom_site` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `region` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id_site`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Déchargement des données de la table `site`
---
-
-INSERT INTO `site` (`id_site`, `nom_site`, `region`) VALUES
-(2, 'Arudy', '64_Pyrénées-Atlantiques'),
-(46, 'Russan', '30_Gard');
 
 -- --------------------------------------------------------
 
@@ -214,13 +157,6 @@ CREATE TABLE IF NOT EXISTS `spring_session` (
   KEY `SPRING_SESSION_IX3` (`PRINCIPAL_NAME`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC;
 
---
--- Déchargement des données de la table `spring_session`
---
-
-INSERT INTO `spring_session` (`PRIMARY_ID`, `SESSION_ID`, `CREATION_TIME`, `LAST_ACCESS_TIME`, `MAX_INACTIVE_INTERVAL`, `EXPIRY_TIME`, `PRINCIPAL_NAME`) VALUES
-('ad66ee5c-14f7-4864-bd00-5c8ce2ed0228', '5f16b28d-056e-463b-8a21-17bb36586526', 1576366819213, 1576372825971, 900, 1576373725971, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -235,14 +171,6 @@ CREATE TABLE IF NOT EXISTS `spring_session_attributes` (
   PRIMARY KEY (`SESSION_PRIMARY_ID`,`ATTRIBUTE_NAME`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC;
 
---
--- Déchargement des données de la table `spring_session_attributes`
---
-
-INSERT INTO `spring_session_attributes` (`SESSION_PRIMARY_ID`, `ATTRIBUTE_NAME`, `ATTRIBUTE_BYTES`) VALUES
-('ad66ee5c-14f7-4864-bd00-5c8ce2ed0228', 'infoSession', 0xaced0005737200136a6176612e7574696c2e41727261794c6973747881d21d99c7619d03000149000473697a6578700000000277040000000274000132740006566963746f7278),
-('ad66ee5c-14f7-4864-bd00-5c8ce2ed0228', 'MY_SESSION_INFO', 0xaced0005737200136a6176612e7574696c2e41727261794c6973747881d21d99c7619d03000149000473697a6578700000000277040000000274000132740006566963746f7278);
-
 -- --------------------------------------------------------
 
 --
@@ -256,22 +184,13 @@ CREATE TABLE IF NOT EXISTS `topo` (
   `description` text COLLATE utf8_unicode_ci NOT NULL,
   `date_parution` date NOT NULL,
   `statut` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `id_site` int(10) NOT NULL,
-  `id_proprietaire` int(10) NOT NULL,
+  `id_user` int(11) DEFAULT NULL,
+  `id_site` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_topo`),
-  KEY `fk_topo_site` (`id_site`),
-  KEY `fk_proprietaire` (`id_proprietaire`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  KEY `FKsmygsg9hrrwl92yqgnnu41rkg` (`id_user`),
+  KEY `FKq0u3kvcohifg7l9xe37aivo4i` (`id_site`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Déchargement des données de la table `topo`
---
-
-INSERT INTO `topo` (`id_topo`, `nom_topo`, `description`, `date_parution`, `statut`, `id_site`, `id_proprietaire`) VALUES
-(1, 'Verghellu', 'C\'est la falaise parfaite pour une journée d\'escalade en famille. A deux pas d\'une petite route où les voitures sont rares et à l\'ombre des larici, vous testerez vos chaussons et votre technique sur les belles dalles du secteur central. Plus haut à droite, quelques jolies longueurs vous réapprendront à tirer sur les bras.', '2018-01-12', 'attente', 1, 1),
-(2, 'Vallée de l\'Arve', 'Retrouvez dans ce topo-guide toutes les voies moderne de la vallée de l\'Arve (à l\'exception de celle de Chamonix). Plus de 1260 itinéraires de grandes voies sont à explorer dan ce topo tout en couleur avec pour la plupart des grandes voies, un tracé photo. Les dessins des autres sites, faits à la main, sont précis et esthétiques. Pour chaque site l\'accès est décrit par un texte et un schéma précis. Une sélection de sa voie en fonction du niveau, de la longueur ou des conditions peut-être effectuée par le grimpeur grâce au tableau récapitulatif présenté au début de l\'ouvrage.', '2017-10-02', 'prete', 1, 2),
-(3, 'Fixin', 'L\'escalade à Fixin, au sud de Dijon se pratique idéalement au printemps, à l\'automne voir en hiver pour les moins frileux d\'entre nous. La vue depuis le haut des falaises sur les vignobles bourguignons est exceptionnelle. Les voies sportives sont très bien équipées pour une escalade plaisir dans des murs verticaux, présent en nombre sur le site. Cependant, vous y trouverez tous les profils: dalles, murs, dièdres, cheminées, dévers, fissures. La falaise est divisée en 14 secteurs regroupant près de 250 voies du 5a au 8c. ', '2018-07-23', 'prete', 2, 3),
-(4, 'Arco', 'Bien qu’il s’agisse de l’une des zones les plus historiques et des lieux de naissance de l’escalade sportive, de nouvelles zones et de nouveaux itinéraires continuent d’être établis et développés à Arco, en Italie. Cette quatrième version actualisée en 2019 des sites de couennes sportives contient pas moins de 131 secteurs, dont neuf inédits. Il y en a pour toute une vie ! ', '2018-03-19', 'dispo', 2, 3);
 
 -- --------------------------------------------------------
 
@@ -293,17 +212,8 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   UNIQUE KEY `UKrma38wvnqfaf66vvmi57c71lo` (`email`),
   KEY `fk_role` (`id_role`),
   KEY `FKdn75sjxbld9wdj929y68a4hut` (`role_id_role`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Déchargement des données de la table `utilisateur`
---
-
-INSERT INTO `utilisateur` (`id_user`, `nom`, `prenom`, `email`, `password`, `id_role`, `role_id_role`) VALUES
-(16, 'Dupond', 'Alex', 'ad@test.fr', '1234', 2, NULL),
-(17, 'glimois', 'jia', 'jj@test.fr', '1234', 1, NULL),
-(18, 'Gerard', 'Victor', 'vg@test.fr', '1234', 2, NULL),
-(19, 'Verest', 'Cécilia', 'cv@test.fr', '81dc9bdb52d04dc20036dbd8313ed055', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -319,18 +229,9 @@ CREATE TABLE IF NOT EXISTS `voie` (
   `id_secteur` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_voie`),
   KEY `FKbo23xms8n7a30fovqfoh50aw4` (`id_secteur`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Déchargement des données de la table `voie`
---
 
-INSERT INTO `voie` (`id_voie`, `cotation`, `nom_voie`, `id_secteur`) VALUES
-(5, '6b', 'Couenne', 3),
-(6, '5c', 'Margo', 3),
-(7, '7a', 'Blue', 9),
-(14, '6c', 'Collias', 18),
-(15, '8a', 'Baume', 19);
 
 --
 -- Contraintes pour les tables déchargées
@@ -353,7 +254,8 @@ ALTER TABLE `longueur`
 -- Contraintes pour la table `reservation`
 --
 ALTER TABLE `reservation`
-  ADD CONSTRAINT `fk_topo` FOREIGN KEY (`id_topo`) REFERENCES `topo` (`id_topo`);
+  ADD CONSTRAINT `FKiqjwftpb6o2kyu3k45xiemp6c` FOREIGN KEY (`id_user`) REFERENCES `utilisateur` (`id_user`),
+  ADD CONSTRAINT `FKrxx2d19vx5ndessah3r5wit0c` FOREIGN KEY (`id_topo`) REFERENCES `topo` (`id_topo`);
 
 --
 -- Contraintes pour la table `secteur`
@@ -367,6 +269,13 @@ ALTER TABLE `secteur`
 --
 ALTER TABLE `spring_session_attributes`
   ADD CONSTRAINT `SPRING_SESSION_ATTRIBUTES_FK` FOREIGN KEY (`SESSION_PRIMARY_ID`) REFERENCES `spring_session` (`PRIMARY_ID`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `topo`
+--
+ALTER TABLE `topo`
+  ADD CONSTRAINT `FKq0u3kvcohifg7l9xe37aivo4i` FOREIGN KEY (`id_site`) REFERENCES `site` (`id_site`),
+  ADD CONSTRAINT `FKsmygsg9hrrwl92yqgnnu41rkg` FOREIGN KEY (`id_user`) REFERENCES `utilisateur` (`id_user`);
 
 --
 -- Contraintes pour la table `utilisateur`

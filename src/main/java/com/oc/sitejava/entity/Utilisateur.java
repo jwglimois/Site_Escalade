@@ -32,6 +32,14 @@ public class Utilisateur {
 	@OneToMany (mappedBy = "utilisateur", cascade = CascadeType.MERGE)
 	private List<Commentaire> listCom;
 	
+	@Access(AccessType.FIELD)
+	@OneToMany (mappedBy = "proprietaire", cascade = CascadeType.MERGE)
+	private List<Topo> listTopo;
+	
+	@Access(AccessType.FIELD)
+	@OneToMany (mappedBy = "emprunteur", cascade = CascadeType.MERGE)
+	private List<Reservation> listReservation;
+	
 	public Utilisateur() {super();}
 
 	public Utilisateur(int id_user, String nom, String prenom, String email, String password) {
@@ -126,10 +134,22 @@ public class Utilisateur {
 		this.listCom = listCom;
 	}
 
-	
-	
+	public List<Topo> getListTopo() {
+		return listTopo;
+	}
 
-	
-	
+	public void setListTopo(List<Topo> listTopo) {
+		this.listTopo = listTopo;
+	}
+
+	public List<Reservation> getListReservation() {
+		return listReservation;
+	}
+
+	public void setListReservation(List<Reservation> listReservation) {
+		this.listReservation = listReservation;
+	}
+
+
 
 }

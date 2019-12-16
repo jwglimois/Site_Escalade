@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- Meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width = device-width, initial-scale = 1, shrink-to-fit = no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+
+
+<title>Mon compte</title>
+</head>
+
+<body>
+
+<!-- Menu -->
+<div th:replace="menu :: header">
+</div>
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-7">
+			<h2><b>Gestion de Topo</b></h2><br>
+			<h4 class="text-success">Mes topo</h4><br>
+				<table class="table" th:object="${topoDto}">
+			     	<thead class="border-bottom">
+			     		<tr>
+							<th scope="col">N° Topo</th>
+			     			<th scope="col">Nom de Topo</th>	
+			     			<th scope="col">Description</th>
+			     			<th scope="col">Date de parution</th>	
+			     			<th scope="col">Statut</th>			     		
+			     		</tr>
+			     	</thead>
+			     	<tbody class="border-bottom">
+			     		<tr th:each="topo: ${listTopo}">
+			     			<td th:text="${topo.id_topo}">id_topo</td>
+			     			<td th:text="${topo.nom_topo}">nom_topo</td>
+			     			<td th:text="${topo.description}">description</td>
+			     			<td th:text="${topo.date_parution}">date parution</td>
+			     			<td th:text="${topo.statut}">statut</td>
+			     		</tr>
+			     	</tbody>
+		      </table>
+			<br><h4 class="text-success">Créer un topo</h4>
+			<form  th:action="@{/saveTopo}" th:object = "${topoDto}"  method="post">
+				<div class="form-group">
+					<label for="nomTopo" class="control-label">N° du site</label> 
+					<input id="nomTopo" class="form-control" name="id_site" required></input>
+				</div>
+				<div class="form-group">
+					<label for="nomTopo" class="control-label">Nom de Topo</label> 
+					<input id="nomTopo" class="form-control" th:field="*{nom_topo}" required></input>
+				</div>
+				<div class="form-group">
+					<label for="date_parution" class="control-label">Date de parution (format : "yyyy-MM-dd")</label> 
+					<input id="date_parution" class="form-control" name="dateP" required />
+				</div>
+				<div class="form-group">
+					<label for="description" class="control-label">Description</label> 
+					<input id="description" class="form-control" th:field="*{description}"  required />
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-success">Valider</button>
+				</div>
+
+			</form>
+		</div>
+		<div class="col-md-5">
+		<h2><b>Gestion de Réservation</b></h2><br>
+		<h4 class="text-success">Mes demandes de réservation</h4><br>
+		<form action="#" method="post" >
+			<table class="table">
+			     	<thead class="border-bottom">
+			     		<tr>
+							<th scope="col">N° de Réservation</th>
+			     			<th scope="col">Nom de Topo</th>	
+			     			<th scope="col">Email du demandeur</th>
+			     			<th scope="col">Accord de prêt</th>			     		
+			     		</tr>
+			     	</thead>
+			     	<tbody class="border-bottom">
+			     		<tr>
+			     			<td>1</td>
+			     			<td>Rurey</td>
+			     			<td>david@test.fr</td>
+			     			<td>
+			     				<div >
+				     				<input type="radio" id="accord" name="accord">
+	  								<label for="accord">Oui</label>
+	  								<br>
+	  								<input type="radio" id="refus" name="refus" >
+	  								<label for="refus">Non</label>
+			     				</div>
+			     			</td>
+			     		</tr>
+			     	</tbody>
+		      </table>
+		</form>
+		</div>
+	</div>	
+</div>
+
+ 
+
+
+<!-- Footer -->
+<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

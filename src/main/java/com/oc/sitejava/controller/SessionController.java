@@ -1,5 +1,8 @@
 package com.oc.sitejava.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +13,7 @@ import javax.validation.Valid;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,9 +29,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.oc.sitejava.dto.CommentDto;
 import com.oc.sitejava.dto.LongueurDto;
+import com.oc.sitejava.dto.RechercheDto;
 import com.oc.sitejava.dto.SecteurDto;
 import com.oc.sitejava.dto.SiteDto;
 import com.oc.sitejava.dto.SiteFormDto;
+import com.oc.sitejava.dto.TopoDto;
 import com.oc.sitejava.dto.UserInscriptionDto;
 import com.oc.sitejava.dto.VoieDto;
 import com.oc.sitejava.entity.Commentaire;
@@ -35,6 +41,7 @@ import com.oc.sitejava.entity.Longueur;
 import com.oc.sitejava.entity.Role;
 import com.oc.sitejava.entity.Secteur;
 import com.oc.sitejava.entity.Site;
+import com.oc.sitejava.entity.Topo;
 import com.oc.sitejava.entity.Utilisateur;
 import com.oc.sitejava.entity.Voie;
 import com.oc.sitejava.service.CommentService;
@@ -42,6 +49,7 @@ import com.oc.sitejava.service.LongueurService;
 import com.oc.sitejava.service.RoleService;
 import com.oc.sitejava.service.SecteurService;
 import com.oc.sitejava.service.SiteService;
+import com.oc.sitejava.service.TopoService;
 import com.oc.sitejava.service.UserService;
 import com.oc.sitejava.service.VoieService;
 
@@ -70,6 +78,9 @@ public class SessionController {
 	
 	@Autowired
 	private CommentService comService;
+
+	@Autowired
+	private TopoService topoService;
 
 	
 /*--------------Generation de session sur Login--------------*/
@@ -230,7 +241,8 @@ public class SessionController {
 	@GetMapping("/{id:\\d+}")
 	public String showSingleSite(
 			@PathVariable("id") int id, 
-			Model model) {
+			Model model,
+			HttpSession session) {
 		
 		Site site = siteService.get(id);
 		
@@ -295,6 +307,16 @@ public class SessionController {
 			model.addAttribute("listVoieDto3", listVoieDto3);
 		}
 		
+		//show Topo
+		List<Topo> listTopo = site.getListTopo();
+		model.addAttribute("listTopo", listTopo);
+		
+		List<Utilisateur> listOwer = new ArrayList<>();
+		for(Topo t: listTopo) {
+			listOwer.add(t.getProprietaire());
+		}
+	
+		
 		return "fichesite";
 	}
 	
@@ -331,14 +353,11 @@ public class SessionController {
 		ModelAndView mav = new ModelAndView("edit_comment");
 		
 		Commentaire comment = comService.get(id);
-		int newId_user = (int)comment.getUtilisateur().getId_user();
 		
-		String newMessage = new String();
-		comDto = new CommentDto(newId_user, comment, newMessage);
+		comDto = new CommentDto(comment);
 
 		mav.addObject("comDto", comDto);
-		mav.addObject("newId_user", newId_user);
-		mav.addObject("newMessage",newMessage);
+
 		
 		return mav;
 	}
@@ -347,22 +366,14 @@ public class SessionController {
 	public String modifyComment(
 			@ModelAttribute(value="comDto") CommentDto comDto,
 			@PathVariable("idCom") Integer idCom, 
+			@RequestParam("newMessage") String newMessage,
 			Model model) {
 		
 		Commentaire comment = comService.get(idCom);
-		int newId_user = (int)comment.getUtilisateur().getId_user();
-		System.out.println("value de newUd_user is:-------" + newId_user );
 		int idSite = comment.getSite().getId_site();
-		String newMessage = new String();
-		comDto = new CommentDto(newId_user, comment, newMessage);
+		comDto = new CommentDto(comment);
 		model.addAttribute("comDto", comDto);
-		model.addAttribute("newId_user", newId_user);
-		model.addAttribute("newMessage", newMessage);
-		
-		
-		
-		System.out.println("value de newMessage is:-------" + newMessage );
-		System.out.println("value de idCom is:-------" + idCom );
+
 		
 		comService.updateCommentaire(newMessage, idCom);
 		
@@ -371,9 +382,13 @@ public class SessionController {
 	
 	@RequestMapping("/delete/{id}")
 	public String deleteComment(@PathVariable(name="id") int id) {
-		comService.delete(id);
-		return "redirect:/";
+		Site site = comService.get(id).getSite();
+		int idSite = site.getId_site();
+		comService.deleteCommentaire(id);
+		return "redirect:/"+idSite ;
 	}
+
+/*--------------Site------------------*/
 	
 	@RequestMapping(value = "/createsite", method = RequestMethod.GET)
 	public String showSiteForm(Model model) {
@@ -383,6 +398,7 @@ public class SessionController {
 		model.addAttribute("formData", formData);
 		return "createsite";
 	}	
+	
 	@RequestMapping(value = "/saveSite", method = RequestMethod.POST)
 	public String insertSiteFormData(@ModelAttribute(value="formData") SiteFormDto formData) {
 		
@@ -768,6 +784,108 @@ public class SessionController {
 		}
 		return arrInt;
 	}
+	
+/*--------------Topo------------------*/
+	
+	@GetMapping("/compte")
+	public String showCompte(@ModelAttribute(value="topoDto") TopoDto topoDto, Model model, HttpSession session ) {
+		
+		@SuppressWarnings("unchecked")
+		List<String> listSession = (List<String>) session.getAttribute("infoSession");
+		Utilisateur user = userService.getUserByFirstName(listSession.get(1));
+		
+		List<Topo> listTopo = topoService.getlistTopoByUser(user);
+		topoDto = new TopoDto(listTopo);
+		model.addAttribute("topoDto", topoDto);
+		model.addAttribute("listTopo", listTopo);
+		
+		return "compte";
+	}	
+	
+	@RequestMapping(value = "/saveTopo", method = RequestMethod.POST)
+    public String saveTopo(
+    		@ModelAttribute(value="topoDto") TopoDto topoDto, 
+    		@RequestParam("id_site") Integer id_site, 
+    		@RequestParam(name = "dateP") String dateP,
+    		Model model , 
+    		HttpSession session) throws ParseException {
+		@SuppressWarnings("unchecked")
+		List<String> listSession = (List<String>) session.getAttribute("infoSession");
+		Utilisateur user = userService.getUserByFirstName(listSession.get(1));
+		
+		
+		Topo topo = new Topo();
+		topo.setNom_topo(topoDto.getNom_topo());
+		
+		SimpleDateFormat formatteur = new SimpleDateFormat("yyyy-MM-dd");
+		
+		topo.setDate_parution(formatteur.parse(dateP));
+		topo.setDescription(topoDto.getDescription());
+		topo.setStatut("dispo");
+		topo.setProprietaire(user);
+		topo.setSite(siteService.get(id_site));
+		
+		topoService.save(topo);
+		
+		return "redirect:/compte";
+	}
+	
+	@RequestMapping("/reserver/{idOwner}")
+	public String reserverTopo(
+			@PathVariable(name="idOwner") int idOwner,
+			Model model) {
+		Utilisateur owner =userService.get(idOwner);
+		System.out.println("------owner = " + owner);
+		model.addAttribute("owner", owner);
+		return "contact";
+	}
+
+
+	
+/* ------Recherche par Multicritères ----------- */	
+	
+	@GetMapping("/recherche")
+	public String showRecherche(@ModelAttribute(value="rechercheDto") RechercheDto recDto, Model model ) {
+	List<Site> listSite = siteService.listAll();
+	List<String> listRegion = new ArrayList<>();
+	for(int i=0; i<listSite.size(); i++) {
+		listRegion.add(listSite.get(i).getRegion());
+	}
+	
+	List<Voie> listVoie = voieService.listAll();
+	List<String> listCote = new ArrayList<>();
+	for(int i=0; i<listVoie.size(); i++) {
+		listCote.add(listVoie.get(i).getCotation());
+	}
+	
+	recDto = new RechercheDto(listRegion, listCote);
+	model.addAttribute("recDto" , recDto);
+	model.addAttribute("listRegion" , listRegion);
+	model.addAttribute("listCote" , listCote);
+	
+	return "recherche";
+	}
+	
+	@RequestMapping(value = "/sendQuery", method = RequestMethod.POST)
+    public String sendQuery(
+    		@ModelAttribute(value="rechercheDto") RechercheDto recDto,
+    		Model model) {
+	
+	System.out.println("---------recDto = " + recDto);	
+	
+	String region = recDto.getRegion();
+	System.out.println("---------region = " + region);	
+	
+	String cotation = recDto.getCote();
+	System.out.println("---------cotation = " + cotation);	
+	
+	int idSite = siteService.getIdSiteBySearch(region, cotation);
+
+    return "redirect:/"+idSite;
+	}
+	
+
+	
 }
 
 

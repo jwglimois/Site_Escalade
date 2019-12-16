@@ -18,4 +18,10 @@ public interface SiteRepository extends JpaRepository<Site, Integer >{
 			nativeQuery = true)
 	Integer fetchLastIDSite();
 	
+	@Query(value = "SELECT s.id_site FROM site s "
+			+ "INNER JOIN secteur sr ON s.id_site = sr.id_site "
+			+ "INNER JOIN voie v ON v.id_secteur = sr.id_secteur "
+			+ "WHERE s.region=?1 AND v.cotation=?2 ",
+			nativeQuery = true)
+	Integer getIdSiteBySearch(String region, String cotation);
 }

@@ -36,6 +36,10 @@ public class Site  {
 	@OneToMany (mappedBy = "site", cascade = CascadeType.ALL)
 	private List<Commentaire> listCom;
 	
+	@Access(AccessType.FIELD)
+	@OneToMany (mappedBy = "site", cascade = CascadeType.ALL)
+	private List<Topo> listTopo;
+	
 	public List<Secteur> getlistSecteurs() {
 		return listSecteurs;
 	}
@@ -102,6 +106,15 @@ public class Site  {
 		this.listCom = listCom;
 	}
 
+	public List<Topo> getListTopo() {
+		return listTopo;
+	}
+
+	public void setListTopo(List<Topo> listTopo) {
+		this.listTopo = listTopo;
+	}
+
+	
 
 
 }

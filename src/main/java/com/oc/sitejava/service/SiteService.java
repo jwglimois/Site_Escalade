@@ -23,6 +23,9 @@ public class SiteService {
 		return siteRepository.fetchSites();
 	}
 	
+	public Integer getIdSiteBySearch(String region, String cotation) {
+		return siteRepository.getIdSiteBySearch(region, cotation);
+	}
 	
 	public List<Site> listAll(){
 		return siteRepository.findAll();

@@ -32,6 +32,12 @@ public class CommentDto {
 
 
 
+	public CommentDto(Commentaire comment) {
+		super();
+		this.comment = comment;
+	}
+
+
 	public CommentDto(int id_user, Commentaire comment, String message) {
 		super();
 		this.id_user = id_user;

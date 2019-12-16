@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.oc.sitejava.entity.Commentaire;
@@ -21,4 +22,10 @@ public interface CommentRepository extends JpaRepository <Commentaire, Integer>{
 	@Query(value = "update commentaire c set c.message = ? where c.id_commentaire = ?", 
 	  nativeQuery = true)
 	void updateCommentaire(String message, Integer id_commentaire);
+	
+	@Transactional
+	@Modifying
+	@Query(value="delete from commentaire where id_commentaire= ?1", 
+			nativeQuery=true)
+	void deleteCommentaire(int id_commentaire);
 }

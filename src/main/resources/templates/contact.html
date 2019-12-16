@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<!-- Meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width = device-width, initial-scale = 1, shrink-to-fit = no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+
+
+<title>Connexion</title>
+</head>
+
+<body>
+
+<!-- Menu -->
+<div th:replace="menu :: header">
+</div>
+ 
+<div class="container">
+
+	<div class="row">
+		<div class="col-md-11 col-md-offset-3" >
+			<h1>Merci de contacter le possesseur de ce Topo</h1>
+			<table class="table" th:object=${owner}>
+			     	<thead class="border-bottom">
+			     		<tr>
+							<th scope="col">Nom</th>
+			     			<th scope="col">Prénom</th>	
+			     			<th scope="col">Email</th>	     		
+			     		</tr>
+			     	</thead>
+			     	<tbody class="border-bottom">
+			     		<tr>
+			     			<td th:text="*{nom}">nom</td>
+			     			<td th:text="*{prenom}">prenom</td>
+			     			<td th:text="*{email}">email</td>
+			     			
+			     		</tr>
+			     	</tbody>
+		      </table>
+		</div>
+</div>
+
+
+</div>
+
+
+<!-- Footer -->
+<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

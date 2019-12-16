@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<!-- Meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width = device-width, initial-scale = 1, shrink-to-fit = no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+
+
+<title>Connexion</title>
+</head>
+
+<body>
+
+<!-- Menu -->
+<div th:replace="menu :: header">
+</div>
+ 
+<div class="container">
+
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			<h1>Recherche</h1>				
+			<br>
+			<form th:action="@{/sendQuery}" th:object="${recDto}" method="post" >
+				<div class="form-group">
+					<h4>Region</h4>
+					<select class=form-control th:field="*{region}">
+					 <option  th:each="region: ${listRegion}" th:value="${region}" th:text="${region}"></option>
+					</select>
+				</div>
+				<div class="form-group" >
+					<h4>Cotation</h4>
+					<select class=form-control th:field="*{cote}">
+					 <option  th:each="cote: ${listCote}" th:value="${cote}" th:text="${cote}"></option>
+					</select>
+				</div>		
+				<div class="form-group">
+					<input type="submit" name="query" id="query" class="form-control btn btn-primary" value="Valider" />
+				</div>		
+			</form>
+			<br>
+
+		
+	</div>
+</div>
+
+
+</div>
+
+
+<!-- Footer -->
+<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+</body>
+</html>
