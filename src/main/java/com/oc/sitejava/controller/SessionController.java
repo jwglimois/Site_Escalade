@@ -2,7 +2,6 @@ package com.oc.sitejava.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,7 +12,6 @@ import javax.validation.Valid;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.oc.sitejava.dto.CommentDto;
 import com.oc.sitejava.dto.LongueurDto;
 import com.oc.sitejava.dto.RechercheDto;
+import com.oc.sitejava.dto.ReserveDto;
 import com.oc.sitejava.dto.SecteurDto;
 import com.oc.sitejava.dto.SiteDto;
 import com.oc.sitejava.dto.SiteFormDto;
@@ -38,6 +37,7 @@ import com.oc.sitejava.dto.UserInscriptionDto;
 import com.oc.sitejava.dto.VoieDto;
 import com.oc.sitejava.entity.Commentaire;
 import com.oc.sitejava.entity.Longueur;
+import com.oc.sitejava.entity.Reservation;
 import com.oc.sitejava.entity.Role;
 import com.oc.sitejava.entity.Secteur;
 import com.oc.sitejava.entity.Site;
@@ -46,6 +46,7 @@ import com.oc.sitejava.entity.Utilisateur;
 import com.oc.sitejava.entity.Voie;
 import com.oc.sitejava.service.CommentService;
 import com.oc.sitejava.service.LongueurService;
+import com.oc.sitejava.service.ReserveService;
 import com.oc.sitejava.service.RoleService;
 import com.oc.sitejava.service.SecteurService;
 import com.oc.sitejava.service.SiteService;
@@ -55,7 +56,7 @@ import com.oc.sitejava.service.VoieService;
 
 
 @Controller
-@SessionAttributes("infoSession")
+@SessionAttributes({"infoSession", "idUserSession"})
 public class SessionController {
 	
 	@Autowired
@@ -81,6 +82,9 @@ public class SessionController {
 
 	@Autowired
 	private TopoService topoService;
+	
+	@Autowired
+	private ReserveService reserveService;
 
 	
 /*--------------Generation de session sur Login--------------*/
@@ -133,10 +137,24 @@ public class SessionController {
 			infoSession.add(id_role);
 			infoSession.add(prenomUser);
 	
-			request.getSession().setAttribute("MY_SESSION_INFO", infoSession);
-			System.out.println("Username entrée --method Post : " + username );	
+			//Ajouter la 2ère object Session : idUser
+			@SuppressWarnings("unchecked")
+			List<String> idUserSession = (List<String>) request.getSession().getAttribute("idUserSession");
+			//Vider la liste de anciens sessions
+			if(idUserSession != null) {
+				idUserSession.clear();
+			}
+			if (idUserSession== null) {
+				idUserSession= new ArrayList<>();
+				request.getSession().setAttribute("idUserSession", idUserSession);
+			}
+			String id_user = Long.toString(currentUser.getId_user());
+			idUserSession.add(id_user);
 			
-			return "redirect:/login?success";
+			System.out.println("Username entrée --method Post : " + username );	
+			System.out.println("-----------idUserSession : " + idUserSession );	
+			
+			return "redirect:/index?success";
 		}else {
 			return "redirect:/login?error";
 		}
@@ -799,6 +817,71 @@ public class SessionController {
 		model.addAttribute("topoDto", topoDto);
 		model.addAttribute("listTopo", listTopo);
 		
+		//Gestion Réservation - Reception demandes
+		List<Topo> listTopoRes = new ArrayList<>();
+		
+		for(int i=0; i<listTopo.size();i++) {
+			if(listTopo.get(i).getStatut().equals("attente") && listTopo.get(i).getProprietaire().getId_user()== user.getId_user() ) {
+				listTopoRes.add(listTopo.get(i));
+			}
+		}
+		System.out.println("Size of listTopoRes--------" + listTopoRes.size());
+		for(Topo t: listTopoRes) {
+			System.out.println("MalistTopoRes est --------" + t.getId_topo());
+		}
+		
+		if(listTopoRes.size()>0) {
+			List<Reservation> listResAll = reserveService.listAll();
+			List<Reservation> listRes = new ArrayList<>();
+			
+			for(int i=0; i<listTopoRes.size();i++) {
+				for(int j=0; j<listResAll.size(); j++) {
+					if(listTopoRes.get(i).getId_topo() == listResAll.get(j).getTopo().getId_topo()) {
+						listRes.add(listResAll.get(j));
+					}
+				}
+			}
+			
+			for(Reservation r: listRes) {
+				System.out.println("MalistRes est --------" + r.getId_reservation());
+			}		
+			
+			List<ReserveDto> listResDtoRec = new ArrayList<>();
+			for(Reservation r : listRes ) {
+				listResDtoRec.add(new ReserveDto( r.getId_reservation(), r.getTopo().getId_topo(), r.getTopo().getNom_topo(),
+						r.getEmprunteur().getEmail(), r.getTopo().getStatut() ));
+			}
+			model.addAttribute("listResDtoRec", listResDtoRec);
+			
+			for(ReserveDto rDto3: listResDtoRec) {
+				System.out.println("MalistResDtoRec est --------" + rDto3.getIdRes());
+			}	
+			
+		}
+		
+		//Reservation - Mes demandes envoyées
+		List<Reservation> listResAll2 = reserveService.listAll();
+		List<Reservation> listRes2 = new ArrayList<>();
+		for(int i=0; i<listResAll2 .size();i++) {
+			if(listResAll2.get(i).getEmprunteur().getId_user()==(int)user.getId_user()) {
+				listRes2.add(listResAll2.get(i));
+			}
+		}
+
+		
+		if(listRes2.size()>0) {
+			List<ReserveDto> listResDtoAsk = new ArrayList<>();
+			for(Reservation r: listRes2) {
+				listResDtoAsk.add(new ReserveDto(r.getId_reservation(), r.getTopo().getId_topo(),
+						r.getTopo().getNom_topo(), r.getTopo().getStatut(),r.getTopo().getProprietaire().getPrenom(),
+						r.getTopo().getProprietaire().getNom(), r.getTopo().getProprietaire().getEmail()));
+			}
+			
+			
+			model.addAttribute("listResDtoAsk", listResDtoAsk);
+			
+		}
+		
 		return "compte";
 	}	
 	
@@ -830,17 +913,106 @@ public class SessionController {
 		return "redirect:/compte";
 	}
 	
+/*---------Gestion de réservation-----------*/	
+	
 	@RequestMapping("/reserver/{idOwner}")
 	public String reserverTopo(
 			@PathVariable(name="idOwner") int idOwner,
+			@RequestParam(name="idTopo") int idTopo,
+			@RequestParam(name="idBorrower") String idBorrower,
 			Model model) {
 		Utilisateur owner =userService.get(idOwner);
-		System.out.println("------owner = " + owner);
-		model.addAttribute("owner", owner);
-		return "contact";
+		
+		System.out.println("------owner = " + owner.toString());
+		System.out.println("------idTopo = " + idTopo);
+		System.out.println("------idBorrower = " + idBorrower);
+		
+		topoService.updateTopoStatut("attente", idTopo);
+		
+		Topo topoAsk = topoService.get(idTopo);
+		Utilisateur borrower = userService.get(Integer.parseInt(idBorrower));
+		Reservation res = new Reservation(topoAsk, borrower);
+		reserveService.save(res);
+		
+
+		return "redirect:/compte";
 	}
 
-
+	@RequestMapping(value = "/accorderReservation", method = RequestMethod.POST)
+    public String accorderReservation(
+    		@RequestParam(value = "idResOk", required = false) int[] idResOk,
+    		@RequestParam(value = "idResNo", required = false) int[] idResNo
+    		) {
+		
+		boolean isResOKExist = false;
+		boolean isResNoExist = false;
+		
+		if(idResOk!=null) {
+			isResOKExist = true;
+			//Trouver la list de Reservation ayant accord
+			List<Reservation> listResAll= reserveService.listAll();
+			List<Reservation> listResOk = new ArrayList<>();
+			for(int i=0; i<listResAll.size(); i++) {
+				for(int j=0; j<idResOk.length; j++) {
+					if(listResAll.get(i).getId_reservation() == idResOk[j]) {
+						listResOk.add(listResAll.get(i));
+					}
+				}
+			}
+			//Trouver la liste de Topo ayant accord
+			List<Topo> listTopoAll = topoService.listAll();
+			List<Topo> listTopoOk = new ArrayList<>();
+			for(int i=0; i<listResOk.size(); i++) {
+				for(int j=0; j<listTopoAll.size();j++) {
+					if(listResOk.get(i).getTopo().getId_topo()==listTopoAll.get(j).getId_topo()) {
+						listTopoOk.add(listResOk.get(i).getTopo());
+					}
+				}
+			}
+			
+			for(Topo t: listTopoOk) {
+				topoService.updateTopoStatut("prete", t.getId_topo());
+			}
+		}
+		
+		if(idResNo != null) {
+			isResNoExist = true;
+			//Trouver la list de Reservation ayant refus
+			List<Reservation> listResAll= reserveService.listAll();
+			List<Reservation> listResNo = new ArrayList<>();
+			for(int i=0; i<listResAll.size(); i++) {
+				for(int j=0; j<idResNo.length; j++) {
+					if(listResAll.get(i).getId_reservation() == idResNo[j]) {
+						listResNo.add(listResAll.get(i));
+					}
+				}
+			}
+			
+			//Trouver la liste de Topo ayant accord
+			List<Topo> listTopoAll = topoService.listAll();
+			List<Topo> listTopoNo = new ArrayList<>();
+			for(int i=0; i<listResNo.size(); i++) {
+				for(int j=0; j<listTopoAll.size();j++) {
+					if(listResNo.get(i).getTopo().getId_topo()==listTopoAll.get(j).getId_topo()) {
+						listTopoNo.add(listResNo.get(i).getTopo());
+					}
+				}
+			}
+			
+			for(Topo t: listTopoNo) {
+				topoService.updateTopoStatut("dispo", t.getId_topo());
+			}
+		}
+		
+		if(isResOKExist == false && isResNoExist == false ) {
+			return "redirect:/compte?warning";
+		}
+		
+		return "redirect:/compte?confirm";
+		
+		
+	}
+	
 	
 /* ------Recherche par Multicritères ----------- */	
 	

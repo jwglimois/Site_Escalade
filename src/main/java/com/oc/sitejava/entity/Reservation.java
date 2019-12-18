@@ -35,9 +35,7 @@ public class Reservation {
 	public Reservation() {
 	}
 
-	public Reservation(int id_reservation, Topo topo, Utilisateur emprunteur) {
-		super();
-		this.id_reservation = id_reservation;
+	public Reservation( Topo topo, Utilisateur emprunteur) {
 		this.topo = topo;
 		this.emprunteur = emprunteur;
 	}

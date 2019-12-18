@@ -17,7 +17,12 @@
 <!-- Menu -->
 <div th:replace="menu :: header">
 </div>
-
+<div th:if="${param.confirm}">
+	<div class="alert alert-info row justify-content-center">Merci pour votre confirmation!</div>
+</div>
+<div th:if="${param.warning}">
+	<div class="alert alert-danger row justify-content-center">Vous n'avez pas encore confirmé!</div>
+</div>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-7">
@@ -69,9 +74,10 @@
 		</div>
 		<div class="col-md-5">
 		<h2><b>Gestion de Réservation</b></h2><br>
-		<h4 class="text-success">Mes demandes de réservation</h4><br>
-		<form action="#" method="post" >
-			<table class="table">
+		
+		<form th:action="@{/accorderReservation}" method="post">
+		<h4 class="text-success">Réception de demandes de réservation:</h4><br>
+			<table class="table" th:object ="${listResDtoRec}" th:each="resDto : ${listResDtoRec}">
 			     	<thead class="border-bottom">
 			     		<tr>
 							<th scope="col">N° de Réservation</th>
@@ -82,16 +88,54 @@
 			     	</thead>
 			     	<tbody class="border-bottom">
 			     		<tr>
-			     			<td>1</td>
-			     			<td>Rurey</td>
-			     			<td>david@test.fr</td>
+			     			<td th:text="${resDto.idRes}"></td>
+			     			<td th:text="${resDto.nomTopo}"></td>
+			     			<td  th:text="${resDto.emailBorrower}"></td>
 			     			<td>
 			     				<div >
-				     				<input type="radio" id="accord" name="accord">
-	  								<label for="accord">Oui</label>
-	  								<br>
-	  								<input type="radio" id="refus" name="refus" >
-	  								<label for="refus">Non</label>
+			     					<label for="idResOk">Accorder</label>
+				     				<input type="checkbox" name="idResOk" th:value="${resDto.idRes}">
+				     				<label for="idResNo">Refuser</label>
+				     				<input type="checkbox" name="idResNo" th:value="${resDto.idRes}">
+				     	
+			     				</div>
+			     			</td>
+			     		</tr>
+			     	</tbody>
+		      </table>
+		      <div class="form-group">
+					<button type="submit" th:unless="${#lists.isEmpty(listResDtoRec)}" class="btn btn-success float-right">Valider</button>
+			  </div>
+		</form>
+		<br><br><br>
+		<h4 class="text-success">Demandes de réservation envoyées:</h4><br>
+		<form action="#" method="post" >
+			<table class="table" th:object=${listResDtoAsk}>
+			     	<thead class="border-bottom">
+			     		<tr>
+							<th scope="col">N° de Réservation</th>
+			     			<th scope="col">Nom de Topo</th>	
+			     			<th scope="col">Réponse</th>			     		
+			     		</tr>
+			     	</thead>
+			     	<tbody class="border-bottom">
+			     		<tr th:each="res: ${listResDtoAsk}">
+			     			<td th:text="${res.idRes}"></td>
+			     			<td th:text="${res.nomTopo}"></td>
+			     			<td>
+			     				<div th:if="${res.statut}=='prete'">
+			     					<span class="text-success" th:text="${'Demande accordée'}"><b></b></span><br>
+				     				<span><b><u>Contacter le propriétaire:</u></b></span><br>
+			     					<span ><b>Nom:</b></span>
+	  								<span class="text-info" th:text="${res.prenomOwner} + ' '+ ${res.nomOwner} "></span><br>
+	  								<span><b>Email:</b></span>
+	  								<span class="text-info" th:text="${res.emailOwner}"></span>						
+			     				</div>
+			     				<div th:if="${res.statut}=='dispo'">
+				     				<span class="text-danger" th:text="${'Demande réfusée'}"><b></b></span>	
+			     				</div>
+			     				<div th:if="${res.statut}=='attente'">
+				     				<span class="text-info" th:text="${'Attente'}"><b></b></span>	
 			     				</div>
 			     			</td>
 			     		</tr>

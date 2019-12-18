@@ -112,9 +112,14 @@ hr:after {
 			     			<td th:text="${topo.description}">description</td>
 			     			<td th:text="${topo.date_parution}">date parution</td>
 			     			<td th:text="${topo.statut}">statut</td>
-			     			<td th:each="mySession: ${infoSession}">
-			     				<div th:if="${mySession} =='1' or ${mySession} =='2'">
-			     					<a th:href="@{/reserver/{idOwner} (idOwner=${topo.proprietaire.id_user})}">Réserver</a>
+			     			<td th:unless="${topo.statut=='prete'}" >
+			     				<div th:unless="${#lists.isEmpty(idUserSession)}">
+				     				 <div th:each="idU: ${idUserSession}">
+				     					<a th:href="@{/reserver/{idOwner} 
+				     					(idOwner=${topo.proprietaire.id_user}, 
+				     					idTopo=${topo.id_topo},
+				     					idBorrower=${idU} )}">Réserver</a>
+				     				</div>
 			     				</div>
 			     			</td>
 			     		</tr>

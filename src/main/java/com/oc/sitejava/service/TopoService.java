@@ -15,6 +15,10 @@ public class TopoService {
 	@Autowired
 	private TopoRepository topoRepository;
 	
+	public void updateTopoStatut(String statut, Integer id_topo) {
+		topoRepository.updateTopoStatut(statut, id_topo);
+	}
+	
 	public List<Topo> getlistTopoByUser(Utilisateur utilisateur){
 		return topoRepository.getlistTopoByUser(utilisateur);
 	}
