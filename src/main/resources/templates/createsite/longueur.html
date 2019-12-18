@@ -18,63 +18,355 @@
 <h3 style="text-align:center">Longueurs de vos voies:</h3>
 <br>
 <div class="row justify-content-center">
-	<div class="col-5 align-self-center">
+<div class="col-5 align-self-center">
 <form action="#" th:action="@{/saveLongueur}"  th:object = "${longueurDto}" method="post">
-		<table style="border-collapse: separate; border-spacing: 10px;">
-			<tr>
-				<td style="font-weight:bold">Nom de la Voie: </td>
-				<td th:text="*{voie1.nomVoie}" /></td>
-			</tr>
-			<tr>
-				<td>Hauteur de tous les longueurs en mètre (format ex: 10, 20, 30 ): </td>
-				<td><input type="text" th:field="*{toutHauteur1}" /></td>
-			</tr>
-			<tr>
-				<td style="font-weight:bold">Nom de la Voie: </td>
-				<td th:text="*{voie2.nomVoie}" /></td>
-			</tr>
-			<tr>
-				<td>Hauteur de tous les longueurs en mètre (format ex: 10, 20, 30 ): </td>
-				<td><input type="text" th:field="*{toutHauteur2}" /></td>
-			</tr>
-			<tr>
-				<td style="font-weight:bold">Nom de la Voie: </td>
-				<td th:text="*{voie3.nomVoie}" /></td>
-			</tr>
-			<tr>
-				<td>Hauteur de tous les longueurs en mètre (format ex: 10, 20, 30 ): </td>
-				<td><input type="text" th:field="*{toutHauteur3}" /></td>
-			</tr>
-			<tr>
-				<td style="font-weight:bold">Nom de la Voie: </td>
-				<td th:text="*{voie4.nomVoie}" /></td>
-			</tr>
-			<tr>
-				<td>Hauteur de tous les longueurs en mètre (format ex: 10, 20, 30 ): </td>
-				<td><input type="text" th:field="*{toutHauteur4}" /></td>
-			</tr>
-			<tr>
-				<td style="font-weight:bold">Nom de la Voie: </td>
-				<td th:text="*{voie5.nomVoie}" /></td>
-			</tr>
-			<tr>
-				<td>Hauteur de tous les longueurs en mètre (format ex: 10, 20, 30 ): </td>
-				<td><input type="text" th:field="*{toutHauteur5}" /></td>
-			</tr>
-			<tr>
-				<td style="font-weight:bold">Nom de la Voie: </td>
-				<td th:text="*{voie6.nomVoie}" /></td>
-			</tr>
-			<tr>
-				<td>Hauteur de tous les longueurs en mètre (format ex: 10, 20, 30 ): </td>
-				<td><input type="text" th:field="*{toutHauteur6}" /></td>
-			</tr>						
-			<tr>
-				<td colspan="2"><button type="submit">Valider</button></td>
-			</tr>
-		</table>	
-	</form>
-	</div>
+		<div class="form-group">
+			<h3><b>Nom de la Voie 1:</b></h3>
+			<input class="form-control" th:field="*{voie1.nomVoie}"></input>
+			<h4>Tous les longueurs de la voie 1: </h4>
+			<span>Longueur 1</span>
+			<select class=form-control name="longueurV11" th:field="*{voie1.listLongueur[0].hauteur}">
+				<option value="0"></option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="35">35</option>
+				<option value="40">40</option>
+				<option value="45">45</option>
+				<option value="50">50</option>
+			</select>
+			<span>Longueur 2</span>
+			<select class=form-control name="longueurV12" th:field="*{voie1.listLongueur[1].hauteur}">
+				<option value="0"></option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="35">35</option>
+				<option value="40">40</option>
+				<option value="45">45</option>
+				<option value="50">50</option>
+			</select>
+			<span>Longueur 3</span>
+			<select class=form-control name="longueurV13" th:field="*{voie1.listLongueur[2].hauteur}">
+				<option value="0"></option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="35">35</option>
+				<option value="40">40</option>
+				<option value="45">45</option>
+				<option value="50">50</option>
+			</select>
+			<span>Longueur 4</span>
+			<select class=form-control name="longueurV14" th:field="*{voie1.listLongueur[3].hauteur}">
+				<option value="0"></option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="35">35</option>
+				<option value="40">40</option>
+				<option value="45">45</option>
+				<option value="50">50</option>
+			</select>		
+		</div>
+		<div class="form-group">
+			<h3><b>Nom de la Voie 2:</b></h3>
+			<input class="form-control" th:field="*{voie2.nomVoie}"></input>
+			<h4>Tous les longueurs de la voie 2: </h4>
+			<span>Longueur 1</span>
+			<select class=form-control name="longueurV21" th:field="*{voie2.listLongueur[0].hauteur}">
+				<option value="0"></option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="35">35</option>
+				<option value="40">40</option>
+				<option value="45">45</option>
+				<option value="50">50</option>
+			</select>
+			<span>Longueur 2</span>
+			<select class=form-control name="longueurV22" th:field="*{voie2.listLongueur[1].hauteur}">
+				<option value="0"></option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="35">35</option>
+				<option value="40">40</option>
+				<option value="45">45</option>
+				<option value="50">50</option>
+			</select>
+			<span>Longueur 3</span>
+			<select class=form-control name="longueurV23" th:field="*{voie2.listLongueur[2].hauteur}">
+				<option value="0"></option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="35">35</option>
+				<option value="40">40</option>
+				<option value="45">45</option>
+				<option value="50">50</option>
+			</select>
+			<span>Longueur 4</span>
+			<select class=form-control name="longueurV24" th:field="*{voie2.listLongueur[3].hauteur}">
+				<option value="0"></option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="35">35</option>
+				<option value="40">40</option>
+				<option value="45">45</option>
+				<option value="50">50</option>
+			</select>		
+		</div>
+		<div class="form-group">
+			<h3><b>Nom de la Voie 3:</b></h3>
+			<input class="form-control" th:field="*{voie3.nomVoie}"></input>
+			<h4>Tous les longueurs de la voie 3: </h4>
+			<span>Longueur 1</span>
+			<select class=form-control name="longueurV31" th:field="*{voie3.listLongueur[0].hauteur}">
+				<option value="0"></option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="35">35</option>
+				<option value="40">40</option>
+				<option value="45">45</option>
+				<option value="50">50</option>
+			</select>
+			<span>Longueur 2</span>
+			<select class=form-control name="longueurV32" th:field="*{voie3.listLongueur[1].hauteur}">
+				<option value="0"></option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="35">35</option>
+				<option value="40">40</option>
+				<option value="45">45</option>
+				<option value="50">50</option>
+			</select>
+			<span>Longueur 3</span>
+			<select class=form-control name="longueurV33" th:field="*{voie3.listLongueur[2].hauteur}">
+				<option value="0"></option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="35">35</option>
+				<option value="40">40</option>
+				<option value="45">45</option>
+				<option value="50">50</option>
+			</select>
+			<span>Longueur 4</span>
+			<select class=form-control name="longueurV34" th:field="*{voie3.listLongueur[3].hauteur}">
+				<option value="0"></option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="35">35</option>
+				<option value="40">40</option>
+				<option value="45">45</option>
+				<option value="50">50</option>
+			</select>		
+		</div>
+		<div class="form-group">
+			<h3><b>Nom de la Voie 4:</b></h3>
+			<input class="form-control" th:field="*{voie4.nomVoie}"></input>
+			<h4>Tous les longueurs de la voie 4: </h4>
+			<span>Longueur 1</span>
+			<select class=form-control name="longueurV41" th:field="*{voie4.listLongueur[0].hauteur}">
+				<option value="0"></option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="35">35</option>
+				<option value="40">40</option>
+				<option value="45">45</option>
+				<option value="50">50</option>
+			</select>
+			<span>Longueur 2</span>
+			<select class=form-control name="longueurV42" th:field="*{voie4.listLongueur[1].hauteur}">
+				<option value="0"></option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="35">35</option>
+				<option value="40">40</option>
+				<option value="45">45</option>
+				<option value="50">50</option>
+			</select>
+			<span>Longueur 3</span>
+			<select class=form-control name="longueurV43" th:field="*{voie4.listLongueur[2].hauteur}">
+				<option value="0"></option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="35">35</option>
+				<option value="40">40</option>
+				<option value="45">45</option>
+				<option value="50">50</option>
+			</select>
+			<span>Longueur 4</span>
+			<select class=form-control name="longueurV44" th:field="*{voie4.listLongueur[3].hauteur}">
+				<option value="0"></option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="35">35</option>
+				<option value="40">40</option>
+				<option value="45">45</option>
+				<option value="50">50</option>
+			</select>		
+		</div>
+		<div class="form-group">
+			<h3><b>Nom de la Voie 5:</b></h3>
+			<input class="form-control" th:field="*{voie5.nomVoie}"></input>
+			<h4>Tous les longueurs de la voie 5: </h4>
+			<span>Longueur 1</span>
+			<select class=form-control name="longueurV51" th:field="*{voie5.listLongueur[0].hauteur}">
+				<option value="0"></option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="35">35</option>
+				<option value="40">40</option>
+				<option value="45">45</option>
+				<option value="50">50</option>
+			</select>
+			<span>Longueur 2</span>
+			<select class=form-control name="longueurV52" th:field="*{voie5.listLongueur[1].hauteur}">
+				<option value="0"></option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="35">35</option>
+				<option value="40">40</option>
+				<option value="45">45</option>
+				<option value="50">50</option>
+			</select>
+			<span>Longueur 3</span>
+			<select class=form-control name="longueurV53" th:field="*{voie5.listLongueur[2].hauteur}">
+				<option value="0"></option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="35">35</option>
+				<option value="40">40</option>
+				<option value="45">45</option>
+				<option value="50">50</option>
+			</select>
+			<span>Longueur 4</span>
+			<select class=form-control name="longueurV54" th:field="*{voie5.listLongueur[3].hauteur}">
+				<option value="0"></option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="35">35</option>
+				<option value="40">40</option>
+				<option value="45">45</option>
+				<option value="50">50</option>
+			</select>		
+		</div>
+		<div class="form-group">
+			<h3><b>Nom de la Voie 6:</b></h3>
+			<input class="form-control" th:field="*{voie6.nomVoie}"></input>
+			<h4>Tous les longueurs de la voie 6: </h4>
+			<span>Longueur 1</span>
+			<select class=form-control name="longueurV61" th:field="*{voie6.listLongueur[0].hauteur}">
+				<option value="0"></option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="35">35</option>
+				<option value="40">40</option>
+				<option value="45">45</option>
+				<option value="50">50</option>
+			</select>
+			<span>Longueur 2</span>
+			<select class=form-control name="longueurV62" th:field="*{voie6.listLongueur[1].hauteur}">
+				<option value="0"></option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="35">35</option>
+				<option value="40">40</option>
+				<option value="45">45</option>
+				<option value="50">50</option>
+			</select>
+			<span>Longueur 3</span>
+			<select class=form-control name="longueurV63" th:field="*{voie6.listLongueur[2].hauteur}">
+				<option value="0"></option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="35">35</option>
+				<option value="40">40</option>
+				<option value="45">45</option>
+				<option value="50">50</option>
+			</select>
+			<span>Longueur 4</span>
+			<select class=form-control name="longueurV64" th:field="*{voie6.listLongueur[3].hauteur}">
+				<option value="0"></option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="35">35</option>
+				<option value="40">40</option>
+				<option value="45">45</option>
+				<option value="50">50</option>
+			</select>		
+		</div>
+		<div class="form-group">
+			<button class="btn btn-primary float-right" type="submit">Valider</button>
+		</div>	
+</form>
+</div>
 </div>
 
 

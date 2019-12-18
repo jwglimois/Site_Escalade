@@ -3,8 +3,9 @@ package com.oc.sitejava.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-
+import org.springframework.transaction.annotation.Transactional;
 
 import com.oc.sitejava.entity.Voie;
 
@@ -35,4 +36,11 @@ public interface VoieRepository extends JpaRepository<Voie, Integer>{
 				nativeQuery = true)
 	Integer getNbLongueur(Integer id_voie);	
 	
+	@Transactional
+	@Modifying
+	@Query(value = "insert into voie (cotation, nom_voie, id_secteur) values (?1 , ?2, ?3)", 
+	  nativeQuery = true)
+	void insertVoie(String cotation, String nom_voie, Integer id_secteur);
 }
+	
+

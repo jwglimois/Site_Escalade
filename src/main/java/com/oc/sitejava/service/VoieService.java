@@ -1,6 +1,6 @@
 package com.oc.sitejava.service;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +28,10 @@ public class VoieService {
 	
 	public Integer getNbLongueur(Integer id_voie) {
 		return voieRepository.getNbLongueur(id_voie);
+	}
+	
+	public void insertVoie(String cotation, String nom_voie, Integer id_secteur) {
+		voieRepository.insertVoie(cotation, nom_voie, id_secteur);
 	}
 	
 	public List<Voie> listAll(){

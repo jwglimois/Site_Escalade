@@ -26,7 +26,7 @@ public class Longueur {
 	private int hauteur;
 	
 	@Access(AccessType.FIELD)
-	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_voie")
 	private Voie voie;
 	
@@ -58,6 +58,12 @@ public class Longueur {
 
 	public void setVoie(Voie voie) {
 		this.voie = voie;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Longueur [id_longueur=" + id_longueur + ", hauteur=" + hauteur + ", voie=" + voie + "]";
 	}
 
 	

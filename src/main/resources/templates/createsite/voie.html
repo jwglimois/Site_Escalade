@@ -20,71 +20,171 @@
 <div class="row justify-content-center">
 	<div class="col-5 align-self-center">
 		<form action="#" th:action="@{/saveVoie}"  th:object = "${voieDto}" method="post">
-		<table style="border-collapse: separate; border-spacing: 10px;">
-			<tr>
-				<td style="font-weight:bold">Nom du secteur: </td>
-				<td th:text="*{secteur1.nomSecteur}" /></td>
-			</tr>
-			<tr>
-				<td>Nom de la Voie 1: </td>
-				<td><input type="text" th:field="*{voie1.nomVoie}" /></td>
-			</tr>
-			<tr>
-				<td>Cotation de la Voie 1:  </td>
-				<td><input type="text"  th:field="*{voie1.cotation}" /></td>
-			</tr>
-			<tr>
-				<td>Nom de la Voie 2: </td>
-				<td><input type="text" th:field="*{voie2.nomVoie}" /></td>
-			</tr>
-			<tr>
-				<td>Cotation de la Voie 2:  </td>
-				<td><input type="text"  th:field="*{voie2.cotation}" /></td>
-			</tr>	
-				<tr>
-				<td style="font-weight:bold" >Nom du secteur: </td>
-				<td th:if="*{secteur2 != null}" th:text="*{secteur2.nomSecteur}" /></td>
-			</tr>
-			<tr>
-				<td>Nom de la Voie 1:  </td>
-				<td><input type="text" th:if="*{secteur2 != null}"  th:field="*{voie3.nomVoie}" /></td>
-			</tr>
-			<tr>
-				<td>Cotation de la Voie 1:  </td>
-				<td><input type="text" th:if="*{secteur2 != null}"  th:field="*{voie3.cotation}" /></td>
-			</tr>
-			<tr>
-				<td>Nom de la Voie 2:  </td>
-				<td><input type="text" th:if="*{secteur2 != null}"  th:field="*{voie4.nomVoie}" /></td>
-			</tr>
-			<tr>
-				<td>Cotation de la Voie 2:  </td>
-				<td><input type="text" th:if="*{secteur2 != null}"  th:field="*{voie4.cotation}" /></td>
-			</tr>	
-			<tr>
-				<td style="font-weight:bold" >Nom du secteur: </td>
-				<td th:if="*{secteur3 != null}"  th:text="*{secteur3.nomSecteur}" /></td>
-			</tr>
-			<tr>
-				<td>Nom de la Voie 1:  </td>
-				<td><input type="text" th:if="*{secteur3 != null}"  th:field="*{voie5.nomVoie}" /></td>
-			</tr>
-			<tr>
-				<td>Cotation de la Voie 1:  </td>
-				<td><input type="text" th:if="*{secteur3 != null}"  th:field="*{voie5.cotation}" /></td>
-			</tr>
-			<tr>
-				<td>Nom de la Voie 2:  </td>
-				<td><input type="text" th:if="*{secteur3 != null}" th:field="*{voie6.nomVoie}" /></td>
-			</tr>
-			<tr>
-				<td>Cotation de la Voie 2:  </td>
-				<td><input type="text" th:if="*{secteur3 != null}"  th:field="*{voie6.cotation}" /></td>
-			</tr>	
-			<tr>
-				<td colspan="2"><button type="submit">Valider</button></td>
-			</tr>
-		</table>	
+			<div class="form-group">
+				<label class="control-label font-weight-bold" for="nomSecteur1">Nom du secteur: </label>
+				<input class="form-control" type="text" id="nomSecteur1" th:field="*{secteur1.nomSecteur}"></input>
+			</div>
+			<div class="form-group">
+				<label class="control-label" for="nomVoie1">Nom de la Voie 1:</label>
+				<input class="form-control" type="text" id="nomVoie1"  th:field="*{voie1.nomVoie}" ></input>
+			</div>
+			<div class="form-group">
+				<span>Cotation de la Voie 1: </span>
+				<select class=form-control name="coteVoie1" th:field="*{voie1.cotation}">
+					<option value="0"></option>
+					<option value="5a">5a</option>
+					<option value="5b">5b</option>
+					<option value="5c">5c</option>
+					<option value="6a">6a</option>
+					<option value="6b">6b</option>
+					<option value="6c">6c</option>
+					<option value="7a">7a</option>
+					<option value="7b">7b</option>
+					<option value="7c">7c</option>
+					<option value="8a">8a</option>
+					<option value="8b">8b</option>
+					<option value="8c">8c</option>
+					<option value="9a">9a</option>
+					<option value="9b">9b</option>
+					<option value="9c">9c</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label class="control-label" for="nomVoie2">Nom de la Voie 2:</label>
+				<input class="form-control" type="text" id="nomVoie2"  th:field="*{voie2.nomVoie}" ></input>
+			</div>
+			<div class="form-group">
+				<span>Cotation de la Voie 2: </span>
+				<select class=form-control name="coteVoie2" th:field="*{voie2.cotation}">
+					<option value="0"></option>
+					<option value="5a">5a</option>
+					<option value="5b">5b</option>
+					<option value="5c">5c</option>
+					<option value="6a">6a</option>
+					<option value="6b">6b</option>
+					<option value="6c">6c</option>
+					<option value="7a">7a</option>
+					<option value="7b">7b</option>
+					<option value="7c">7c</option>
+					<option value="8a">8a</option>
+					<option value="8b">8b</option>
+					<option value="8c">8c</option>
+					<option value="9a">9a</option>
+					<option value="9b">9b</option>
+					<option value="9c">9c</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label class="control-label font-weight-bold" for="nomSecteur2">Nom du secteur:</label>
+				<input class="form-control" type="text" id="nomSecteur2" th:if="*{secteur2 != null}" th:field="*{secteur2.nomSecteur}"></input>
+			</div>
+			<div class="form-group">
+				<label class="control-label" for="nomVoie3">Nom de la Voie 1:</label>
+				<input class="form-control" type="text" id="nomVoie3" th:if="*{secteur2 != null}"  th:field="*{voie3.nomVoie}"></input>
+			</div>
+			<div class="form-group">
+				<span>Cotation de la Voie 1: </span>
+				<select class=form-control name="coteVoie3" th:if="*{secteur2 != null}"  th:field="*{voie3.cotation}">
+					<option value="0"></option>
+					<option value="5a">5a</option>
+					<option value="5b">5b</option>
+					<option value="5c">5c</option>
+					<option value="6a">6a</option>
+					<option value="6b">6b</option>
+					<option value="6c">6c</option>
+					<option value="7a">7a</option>
+					<option value="7b">7b</option>
+					<option value="7c">7c</option>
+					<option value="8a">8a</option>
+					<option value="8b">8b</option>
+					<option value="8c">8c</option>
+					<option value="9a">9a</option>
+					<option value="9b">9b</option>
+					<option value="9c">9c</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label class="control-label" for="nomVoie4">Nom de la Voie 2:</label>
+				<input class="form-control" type="text" id="nomVoie4" th:if="*{secteur2 != null}"  th:field="*{voie4.nomVoie}"></input>
+			</div>
+			<div class="form-group">
+				<span>Cotation de la Voie 2: </span>
+				<select class=form-control name="coteVoie4" th:if="*{secteur2 != null}"  th:field="*{voie4.cotation}">
+					<option value="0"></option>
+					<option value="5a">5a</option>
+					<option value="5b">5b</option>
+					<option value="5c">5c</option>
+					<option value="6a">6a</option>
+					<option value="6b">6b</option>
+					<option value="6c">6c</option>
+					<option value="7a">7a</option>
+					<option value="7b">7b</option>
+					<option value="7c">7c</option>
+					<option value="8a">8a</option>
+					<option value="8b">8b</option>
+					<option value="8c">8c</option>
+					<option value="9a">9a</option>
+					<option value="9b">9b</option>
+					<option value="9c">9c</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label class="control-label font-weight-bold" for="nomSecteur3">Nom du secteur:</label>
+				<input class="form-control" type="text" id="nomSecteur3" th:if="*{secteur3 != null}"  th:field="*{secteur3.nomSecteur}"></input>
+			</div>
+			<div class="form-group">
+				<label class="control-label" for="nomVoie5">Nom de la Voie 1:</label>
+				<input class="form-control" type="text" id="nomVoie5" th:if="*{secteur3 != null}"  th:field="*{voie5.nomVoie}"></input>
+			</div>
+			<div class="form-group">
+				<span>Cotation de la Voie 1: </span>
+				<select class=form-control name="coteVoie5" th:if="*{secteur3 != null}"  th:field="*{voie5.cotation}">
+					<option value="0"></option>
+					<option value="5a">5a</option>
+					<option value="5b">5b</option>
+					<option value="5c">5c</option>
+					<option value="6a">6a</option>
+					<option value="6b">6b</option>
+					<option value="6c">6c</option>
+					<option value="7a">7a</option>
+					<option value="7b">7b</option>
+					<option value="7c">7c</option>
+					<option value="8a">8a</option>
+					<option value="8b">8b</option>
+					<option value="8c">8c</option>
+					<option value="9a">9a</option>
+					<option value="9b">9b</option>
+					<option value="9c">9c</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label class="control-label" for="nomVoie6">Nom de la Voie 2: </label>
+				<input class="form-control" type="text" id="nomVoie6" th:if="*{secteur3 != null}" th:field="*{voie6.nomVoie}"></input>
+			</div>
+			<div class="form-group">
+				<span>Cotation de la Voie 2: </span>
+				<select class=form-control name="coteVoie6" th:if="*{secteur3 != null}"  th:field="*{voie6.cotation}">
+					<option value="0"></option>
+					<option value="5a">5a</option>
+					<option value="5b">5b</option>
+					<option value="5c">5c</option>
+					<option value="6a">6a</option>
+					<option value="6b">6b</option>
+					<option value="6c">6c</option>
+					<option value="7a">7a</option>
+					<option value="7b">7b</option>
+					<option value="7c">7c</option>
+					<option value="8a">8a</option>
+					<option value="8b">8b</option>
+					<option value="8c">8c</option>
+					<option value="9a">9a</option>
+					<option value="9b">9b</option>
+					<option value="9c">9c</option>
+				</select>
+			</div>
+			<div class="form-group">
+			<button class="btn btn-primary float-right" type="submit">Valider</button>
+			</div>
 	</form>
 	</div>
 </div>

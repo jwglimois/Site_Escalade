@@ -14,6 +14,9 @@ public class LongueurService {
 	@Autowired
 	private LongueurRepository longueurRepository;
 
+	public void insertLongueur(Integer hauteur, Integer id_voie) {
+		longueurRepository.insertLongueur(hauteur, id_voie);
+	}
 	public List<Longueur> listAll(){
 		return longueurRepository.findAll();
 	}

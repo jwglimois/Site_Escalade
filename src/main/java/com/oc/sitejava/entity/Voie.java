@@ -37,7 +37,7 @@ public class Voie {
 	private Secteur secteur;
 	
 	@Access(AccessType.FIELD)
-	@OneToMany(mappedBy="voie",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="voie")
 	private List<Longueur> listLongueur;
 	
 
@@ -53,6 +53,15 @@ public class Voie {
 	}
 	
 	
+	public Voie(int id_voie, String nomVoie, String cotation, Secteur secteur, List<Longueur> listLongueur) {
+		super();
+		this.id_voie = id_voie;
+		this.nomVoie = nomVoie;
+		this.cotation = cotation;
+		this.secteur = secteur;
+		this.listLongueur = listLongueur;
+	}
+
 	public int getId_voie() {
 		return id_voie;
 	}
@@ -77,6 +86,15 @@ public class Voie {
 	public void setCotation(String cotation) {
 		this.cotation = cotation;
 	}
+
+	public List<Longueur> getListLongueur() {
+		return listLongueur;
+	}
+
+	public void setListLongueur(List<Longueur> listLongueur) {
+		this.listLongueur = listLongueur;
+	}
+	
 	
 	
 }

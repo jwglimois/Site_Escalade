@@ -56,7 +56,7 @@ import com.oc.sitejava.service.VoieService;
 
 
 @Controller
-@SessionAttributes({"infoSession", "idUserSession"})
+@SessionAttributes({"infoSession", "idUserSession", "allSitesSession"})
 public class SessionController {
 	
 	@Autowired
@@ -137,7 +137,7 @@ public class SessionController {
 			infoSession.add(id_role);
 			infoSession.add(prenomUser);
 	
-			//Ajouter la 2ère object Session : idUser
+			//Ajouter le 2er object Session : idUser
 			@SuppressWarnings("unchecked")
 			List<String> idUserSession = (List<String>) request.getSession().getAttribute("idUserSession");
 			//Vider la liste de anciens sessions
@@ -150,9 +150,6 @@ public class SessionController {
 			}
 			String id_user = Long.toString(currentUser.getId_user());
 			idUserSession.add(id_user);
-			
-			System.out.println("Username entrée --method Post : " + username );	
-			System.out.println("-----------idUserSession : " + idUserSession );	
 			
 			return "redirect:/index?success";
 		}else {
@@ -337,6 +334,19 @@ public class SessionController {
 		
 		return "fichesite";
 	}
+
+/*--------------Taguer le site----------------*/
+
+	@RequestMapping(value = "/taguerSite/{idSite}", method = RequestMethod.POST)
+	public String taguerSite(
+			@PathVariable(name="idSite") int idSite,
+			HttpSession session) {
+		
+
+		
+		return null;
+	}
+	
 	
 /*--------------Commentaires------------------*/
 	
@@ -345,9 +355,7 @@ public class SessionController {
 			@ModelAttribute(value="comDto") CommentDto comDto,
 			@RequestParam(name="idSite") Integer idSite,
 			HttpSession session) {
-		
-		
-		System.out.println("---------print id_site :" + idSite );
+	
 		
 		@SuppressWarnings("unchecked")
 		List<String> listSession = (List<String>) session.getAttribute("infoSession");
@@ -518,13 +526,13 @@ public class SessionController {
 		Voie voie1 = voieDto.getVoie1();
 		if(voie1.getNomVoie()!= null && !voie1.getNomVoie().equals("")) {
 			voie1.setSecteur(secteur1);
-			voieService.save(voie1);
+			voieService.insertVoie(voie1.getCotation(), voie1.getNomVoie(), voie1.getSecteur().getId_secteur());
 		}
 
 		Voie voie2 = voieDto.getVoie2();
 		if(voie2.getNomVoie()!= null && !voie2.getNomVoie().equals("")) {
 			voie2.setSecteur(secteur1);
-			voieService.save(voie2);
+			voieService.insertVoie(voie2.getCotation(), voie2.getNomVoie(), voie2.getSecteur().getId_secteur());
 		}			
 		
 		Voie voie3 = voieDto.getVoie3();
@@ -534,11 +542,11 @@ public class SessionController {
 			Secteur secteur2 = listSecteur.get(1);
 			if(voie3.getNomVoie()!= null && !voie3.getNomVoie().equals("")) {
 				voie3.setSecteur(secteur2);
-				voieService.save(voie3);
+				voieService.insertVoie(voie3.getCotation(), voie3.getNomVoie(), voie3.getSecteur().getId_secteur());
 			}
 			if(voie4.getNomVoie()!= null && !voie4.getNomVoie().equals("")) {
 				voie4.setSecteur(secteur2);
-				voieService.save(voie4);
+				voieService.insertVoie(voie4.getCotation(), voie4.getNomVoie(), voie4.getSecteur().getId_secteur());
 			}	
 		}
 		
@@ -549,21 +557,21 @@ public class SessionController {
 			Secteur secteur2 = listSecteur.get(2);
 			if(voie3.getNomVoie()!= null && !voie3.getNomVoie().equals("")) {
 				voie3.setSecteur(secteur2);
-				voieService.save(voie3);
+				voieService.insertVoie(voie3.getCotation(), voie3.getNomVoie(), voie3.getSecteur().getId_secteur());
 			}
 			if(voie4.getNomVoie()!= null && !voie4.getNomVoie().equals("")) {
 				voie4.setSecteur(secteur2);
-				voieService.save(voie4);
+				voieService.insertVoie(voie4.getCotation(), voie4.getNomVoie(), voie4.getSecteur().getId_secteur());
 			}
 			
 			Secteur secteur3 = voieDto.getSecteur3();
 			if(voie5.getNomVoie()!= null && !voie5.getNomVoie().equals("")) {
 				voie5.setSecteur(secteur3);
-				voieService.save(voie5);
+				voieService.insertVoie(voie5.getCotation(), voie5.getNomVoie(), voie5.getSecteur().getId_secteur());
 			}
 			if(voie6.getNomVoie()!= null && !voie6.getNomVoie().equals("")) {
 				voie6.setSecteur(secteur3);
-				voieService.save(voie6);
+				voieService.insertVoie(voie6.getCotation(), voie6.getNomVoie(), voie6.getSecteur().getId_secteur());
 			}
 		}
 		
@@ -576,28 +584,28 @@ public class SessionController {
 		List<Secteur> listSecteur = site.getlistSecteurs();
 		
 		//S'il n'y que Secteur 1
-		List<Voie> listVoie1 = new ArrayList<>();
+		List<Voie> listVoieS1 = new ArrayList<>();
 		for(Voie v: listSecteur.get(0).getListVoie()) {
-			listVoie1.add(v);
+			listVoieS1.add(v);
 		}
-		Voie v1 = listVoie1.get(0);
+		Voie v1 = listVoieS1.get(0);
 		
 		Voie v2 = new Voie();
-		if(listVoie1.size()==2) {
-			v2 = listVoie1.get(1);
+		if(listVoieS1.size()==2) {
+			v2 = listVoieS1.get(1);
 		}
 
 		//S'il y a aussi secteur 2
 		Voie v3 = new Voie();
 		Voie v4 = new Voie();		
 		if(listSecteur.size()==2) {
-			List<Voie> listVoie2 = new ArrayList<>();
+			List<Voie> listVoieS2 = new ArrayList<>();
 			for(Voie v: listSecteur.get(1).getListVoie()) {
-				listVoie2.add(v);
+				listVoieS2.add(v);
 			}
-			v3 = listVoie2.get(0);
-			if(listVoie2.size()==2) {
-				v4 = listVoie2.get(1);
+			v3 = listVoieS2.get(0);
+			if(listVoieS2.size()==2) {
+				v4 = listVoieS2.get(1);
 			}
 		}
 
@@ -606,33 +614,27 @@ public class SessionController {
 		Voie v6 = new Voie();
 		if(listSecteur.size()==3) {
 			//Voie3 & voie4 du secteur2
-			List<Voie> listVoie2 = new ArrayList<>();
+			List<Voie> listVoieS2 = new ArrayList<>();
 			for(Voie v: listSecteur.get(1).getListVoie()) {
-				listVoie2.add(v);
+				listVoieS2.add(v);
 			}
-			v3 = listVoie2.get(0);
-			if(listVoie2.size()==2) {
-				v4 = listVoie2.get(1);
+			v3 = listVoieS2.get(0);
+			if(listVoieS2.size()==2) {
+				v4 = listVoieS2.get(1);
 			}
 			
 			//Voie5 & voie6 du secteur3
-			List<Voie> listVoie3 = new ArrayList<>();
+			List<Voie> listVoieS3 = new ArrayList<>();
 			for(Voie v: listSecteur.get(2).getListVoie()) {
-				listVoie3.add(v);
+				listVoieS3.add(v);
 			}
-			v5 = listVoie3.get(0);
-			if(listVoie3.size()==2) {
-				v6 = listVoie3.get(1);
+			v5 = listVoieS3.get(0);
+			if(listVoieS3.size()==2) {
+				v6 = listVoieS3.get(1);
 			}
 		}
 		
-		String th1 = new String();
-		String th2 = new String();
-		String th3 = new String();
-		String th4 = new String();
-		String th5 = new String();
-		String th6 = new String();
-		LongueurDto longueurDto = new LongueurDto(v1, v2, v3, v4, v5, v6, th1, th2, th3, th4, th5, th6 );
+		LongueurDto longueurDto = new LongueurDto(v1, v2, v3, v4, v5, v6);
 		
 		model.addAttribute("voie1", v1);
 		model.addAttribute("voie2", v2);
@@ -640,12 +642,6 @@ public class SessionController {
 		model.addAttribute("voie4", v4);
 		model.addAttribute("voie5", v5);
 		model.addAttribute("voie6", v6);
-		model.addAttribute("toutHauteur1", th1);
-		model.addAttribute("toutHauteur2", th2);
-		model.addAttribute("toutHauteur3", th3);
-		model.addAttribute("toutHauteur4", th4);
-		model.addAttribute("toutHauteur5", th5);
-		model.addAttribute("toutHauteur6", th6);
 		model.addAttribute("longueurDto", longueurDto);
 		return "createsite/longueur";
 	}
@@ -657,151 +653,225 @@ public class SessionController {
 		List<Secteur> listSecteur = site.getlistSecteurs();
 		
 		//Voie 1 du Secteur 1
-		List<Voie> listVoie1 = new ArrayList<>();
+		List<Voie> listVoieS1 = new ArrayList<>();
 		for(Voie v: listSecteur.get(0).getListVoie()) {
-			listVoie1.add(v);
+			listVoieS1.add(v);
 		}
 		
-		Voie voie1 = listVoie1.get(0);
+		
+		Voie voie1 = listVoieS1.get(0);
+		
 		Voie voie2 = new Voie();
 		Voie voie3 = new Voie();
 		Voie voie4 = new Voie();
 		Voie voie5 = new Voie();
 		Voie voie6 = new Voie();
 		
-		List<Integer> ArrLongueur1 = this.convertirStrToArrInt(longueurDto.getToutHauteur1());
-		List<Longueur> listLongueur1 = new ArrayList<>();
-		for(int i=0; i<ArrLongueur1.size(); i++) {
-			listLongueur1.add(new Longueur());
-			listLongueur1.get(i).setHauteur(ArrLongueur1.get(i));
-			listLongueur1.get(i).setVoie(voie1);
-			longueurService.save(listLongueur1.get(i));
+		//Remove les longueur ayant hautueur =0
+		List<Longueur> listLongueurV1Temp = new ArrayList<>();
+		for(Longueur lg : longueurDto.getVoie1().getListLongueur() ) {
+			if(lg.getHauteur()!=0) {
+				listLongueurV1Temp.add(lg);
+			}
+		}
+		
+		voie1.setListLongueur(listLongueurV1Temp);
+		
+		//Cette liste a l'objet "Voie" et le tableau "ListLongueur"
+		List<Longueur> listLongueurV1 = new ArrayList<>(voie1.getListLongueur());
+		
+		for(int i=0; i<listLongueurV1.size();i++) {
+			listLongueurV1.get(i).setVoie(voie1);
+			
+		}
+		
+		
+		for(int i=0; i<listLongueurV1.size();i++) {
+			longueurService.save(listLongueurV1.get(i));
+		
 		}
 		
 		//Voie 2 du Secteur 1 
-		if(listVoie1.size()==2) {
-			voie2 = listVoie1.get(1);
-			List<Integer> ArrLongueur2 = this.convertirStrToArrInt(longueurDto.getToutHauteur2());
-			List<Longueur> listLongueur2 = new ArrayList<>();
-			for(int i=0; i<ArrLongueur2.size(); i++) {
-				listLongueur2.add(new Longueur());
-				listLongueur2.get(i).setHauteur(ArrLongueur2.get(i));
-				listLongueur2.get(i).setVoie(voie2);
-				longueurService.save(listLongueur2.get(i));
-			}	
+		if(listVoieS1.size()==2) {
+			voie2 = listVoieS1.get(1);
+			
+			//Remove les longueur ayant hautueur =0
+			List<Longueur> listLongueurV2Temp = new ArrayList<>();
+			for(Longueur lg : longueurDto.getVoie2().getListLongueur() ) {
+				if(lg.getHauteur()!=0) {
+					listLongueurV2Temp.add(lg);
+				}
+			}
+			
+			voie2.setListLongueur(listLongueurV2Temp);
+			List<Longueur> listLongueurV2 = voie2.getListLongueur();
+			
+			for(int i=0; i<listLongueurV2.size();i++) {
+				listLongueurV2.get(i).setVoie(voie2);
+			}
+			
+			for(Longueur l : listLongueurV2) {
+				longueurService.save(l);
+			}
 		}
-		
+	
+		System.out.println("---------------Size listSecteur :"  + listSecteur.size());
 		//Voie 3 du Secteur 2
 		if(listSecteur.size() ==2) {
-			List<Voie> listVoie2 = new ArrayList<>();
+			List<Voie> listVoieS2 = new ArrayList<>();
 			for(Voie v: listSecteur.get(1).getListVoie()) {
-				listVoie2.add(v);
+				listVoieS2.add(v);
 			}
-			voie3 = listVoie2.get(0);
+			voie3 = listVoieS2.get(0);
 			
-			List<Integer> ArrLongueur3 = this.convertirStrToArrInt(longueurDto.getToutHauteur3());
-			//test
-			System.out.println("Input du secteur 2 pour voie 3 est ------" + longueurDto.getToutHauteur3());
+			//Remove les longueurs ayant hautueur =0
+			List<Longueur> listLongueurV3Temp = new ArrayList<>();
+			for(Longueur lg : longueurDto.getVoie3().getListLongueur() ) {
+				if(lg.getHauteur()!=0) {
+					listLongueurV3Temp.add(lg);
+				}
+			}
+			voie3.setListLongueur(listLongueurV3Temp);
+			List<Longueur> listLongueurV3 = voie3.getListLongueur();
 			
+			for(int i=0; i<listLongueurV3.size();i++) {
+				listLongueurV3.get(i).setVoie(voie3);
+			}
 			
-			List<Longueur> listLongueur3 = new ArrayList<>();
-			for(int i=0; i<ArrLongueur3.size(); i++) {
-				listLongueur3.add(new Longueur());
-				listLongueur3.get(i).setHauteur(ArrLongueur3.get(i));
-				listLongueur3.get(i).setVoie(voie3);
-				longueurService.save(listLongueur3.get(i));
+			for(Longueur l : listLongueurV3) {
+				longueurService.save(l);
 			}
 			
 			//Voie 4 du Secteur 2
-			if(listVoie2.size() ==2) {
-				voie4 = listVoie2.get(1);
+			if(listVoieS2.size() ==2) {
+				voie4 = listVoieS2.get(1);
 				
-				List<Integer> ArrLongueur4 = this.convertirStrToArrInt(longueurDto.getToutHauteur4());
-				List<Longueur> listLongueur4 = new ArrayList<>();
-				for(int i=0; i<ArrLongueur4.size(); i++) {
-					listLongueur4.add(new Longueur());
-					listLongueur4.get(i).setHauteur(ArrLongueur4.get(i));
-					listLongueur4.get(i).setVoie(voie4);
-					longueurService.save(listLongueur4.get(i));
+				//Remove les longueurs ayant hautueur =0
+				List<Longueur> listLongueurV4Temp = new ArrayList<>();
+				for(Longueur lg : longueurDto.getVoie4().getListLongueur() ) {
+					if(lg.getHauteur()!=0) {
+						listLongueurV4Temp.add(lg);
+					}
+				}
+				voie4.setListLongueur(listLongueurV4Temp);
+				List<Longueur> listLongueurV4 = voie4.getListLongueur();
+				
+				for(int i=0; i<listLongueurV4.size();i++) {
+					listLongueurV4.get(i).setVoie(voie4);
+				}
+				
+				for(Longueur l : listLongueurV4) {
+					longueurService.save(l);
 				}
 			}
 		}
-		//Si le secteur 3 existe, on aura le secteur 2 + 3
+		//Si le secteur 3 existe, on aura les secteurs 2 et 3
 		if(listSecteur.size()==3) {
 			
 			//Voie 3 du Secteur 2
-			List<Voie> listVoie2 = new ArrayList<>();
+			List<Voie> listVoieS2 = new ArrayList<>();
 			for(Voie v: listSecteur.get(1).getListVoie()) {
-				listVoie2.add(v);
+				listVoieS2.add(v);
 			}
-			voie3 = listVoie2.get(0);
+			voie3 = listVoieS2.get(0);
+			//Remove les longueurs ayant hautueur =0
+			List<Longueur> listLongueurV3Temp = new ArrayList<>();
+			for(Longueur lg : longueurDto.getVoie3().getListLongueur() ) {
+				if(lg.getHauteur()!=0) {
+					listLongueurV3Temp.add(lg);
+				}
+			}
+			voie3.setListLongueur(listLongueurV3Temp);
 			
-			List<Integer> ArrLongueur3 = this.convertirStrToArrInt(longueurDto.getToutHauteur3());
-			List<Longueur> listLongueur3 = new ArrayList<>();
-			for(int i=0; i<ArrLongueur3.size(); i++) {
-				listLongueur3.add(new Longueur());
-				listLongueur3.get(i).setHauteur(ArrLongueur3.get(i));
-				listLongueur3.get(i).setVoie(voie3);
-				longueurService.save(listLongueur3.get(i));
+			List<Longueur> listLongueurV3 = voie3.getListLongueur();
+			
+			for(int i=0; i<listLongueurV3.size();i++) {
+				listLongueurV3.get(i).setVoie(voie3);
+			}
+			
+			for(Longueur l : listLongueurV3) {
+				longueurService.save(l);
 			}
 			
 			//Voie 4 du Secteur 2
-			if(listVoie2.size() ==2) {
-				voie4 = listVoie2.get(1);
+			if(listVoieS2.size() ==2) {
+				voie4 = listVoieS2.get(1);
 				
-				List<Integer> ArrLongueur4 = this.convertirStrToArrInt(longueurDto.getToutHauteur4());
-				List<Longueur> listLongueur4 = new ArrayList<>();
-				for(int i=0; i<ArrLongueur4.size(); i++) {
-					listLongueur4.add(new Longueur());
-					listLongueur4.get(i).setHauteur(ArrLongueur4.get(i));
-					listLongueur4.get(i).setVoie(voie4);
-					longueurService.save(listLongueur4.get(i));
+				//Remove les longueurs ayant hautueur =0
+				List<Longueur> listLongueurV4Temp = new ArrayList<>();
+				for(Longueur lg : longueurDto.getVoie4().getListLongueur() ) {
+					if(lg.getHauteur()!=0) {
+						listLongueurV4Temp.add(lg);
+					}
+				}
+				voie4.setListLongueur(listLongueurV4Temp);
+				List<Longueur> listLongueurV4 = voie4.getListLongueur();
+				
+				for(int i=0; i<listLongueurV4.size();i++) {
+					listLongueurV4.get(i).setVoie(voie4);
+				}
+				
+				for(Longueur l : listLongueurV4) {
+					longueurService.save(l);
 				}
 			}
 			
 			//Voie 5 du Secteur 3
-			List<Voie> listVoie3 = new ArrayList<>();
+			List<Voie> listVoieS3 = new ArrayList<>();
 			for(Voie v: listSecteur.get(2).getListVoie()) {
-				listVoie3.add(v);
+				listVoieS3.add(v);
 			}
-			voie5 = listVoie3.get(0);
+			voie5 = listVoieS3.get(0);
 			
-			List<Integer> ArrLongueur5 = this.convertirStrToArrInt(longueurDto.getToutHauteur5());
-			List<Longueur> listLongueur5 = new ArrayList<>();
-			for(int i=0; i<ArrLongueur5.size(); i++) {
-				listLongueur5.add(new Longueur());
-				listLongueur5.get(i).setHauteur(ArrLongueur5.get(i));
-				listLongueur5.get(i).setVoie(voie5);
-				longueurService.save(listLongueur5.get(i));
+			//Remove les longueurs ayant hautueur =0
+			List<Longueur> listLongueurV5Temp = new ArrayList<>();
+			for(Longueur lg : longueurDto.getVoie5().getListLongueur() ) {
+				if(lg.getHauteur()!=0) {
+					listLongueurV5Temp.add(lg);
+				}
+			}
+			voie5.setListLongueur(listLongueurV5Temp);
+			
+			List<Longueur> listLongueurV5 = voie5.getListLongueur();
+			
+			for(int i=0; i<listLongueurV5.size();i++) {
+				listLongueurV5.get(i).setVoie(voie5);
+			}
+			
+			for(Longueur l : listLongueurV5) {
+				longueurService.save(l);
 			}
 			
 			//Voie 6 du Secteur 3
-			if(listVoie3.size() ==2) {
-				voie6 = listVoie3.get(1);
+			if(listVoieS3.size() ==2) {
+				voie6 = listVoieS3.get(1);
 				
-				List<Integer> ArrLongueur6 = this.convertirStrToArrInt(longueurDto.getToutHauteur6());
-				List<Longueur> listLongueur6 = new ArrayList<>();
-				for(int i=0; i<ArrLongueur6.size(); i++) {
-					listLongueur6.add(new Longueur());
-					listLongueur6.get(i).setHauteur(ArrLongueur6.get(i));
-					listLongueur6.get(i).setVoie(voie6);
-					longueurService.save(listLongueur6.get(i));
+				//Remove les longueurs ayant hautueur =0
+				List<Longueur> listLongueurV6Temp = new ArrayList<>();
+				for(Longueur lg : longueurDto.getVoie6().getListLongueur() ) {
+					if(lg.getHauteur()!=0) {
+						listLongueurV6Temp.add(lg);
+					}
 				}
+				voie6.setListLongueur(listLongueurV6Temp);
+				voie6.setListLongueur(longueurDto.getVoie6().getListLongueur());
+				List<Longueur> listLongueurV6 = voie6.getListLongueur();
+				
+				for(int i=0; i<listLongueurV6.size();i++) {
+					listLongueurV6.get(i).setVoie(voie6);
+				}
+				
+				for(Longueur l : listLongueurV6) {
+					longueurService.save(l);
+				}
+				
 			}
 		}		
 		
 		return "redirect:/index?successSite";
 	}
 	
-	//Methode utilisé par la function: insertLongueurFormData()
-	public List<Integer> convertirStrToArrInt(String str) {
-		String[] arrStr = str.split(",");
-		List<Integer> arrInt = new ArrayList<>();
-		for(String s: arrStr) {
-			arrInt.add(Integer.parseInt(s));
-		}
-		return arrInt;
-	}
+
 	
 /*--------------Topo------------------*/
 	
