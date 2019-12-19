@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  lun. 16 déc. 2019 à 11:08
+-- Généré le :  mer. 18 déc. 2019 à 23:11
 -- Version du serveur :  5.7.21
 -- Version de PHP :  7.2.4
 
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `commentaire` (
   PRIMARY KEY (`id_commentaire`),
   KEY `FKkgndecm5i0gjb9q0vr7c7qpir` (`id_site`),
   KEY `FKcs6u1s906e16k4ewworhyqbtk` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 -- --------------------------------------------------------
@@ -52,12 +52,11 @@ CREATE TABLE IF NOT EXISTS `hibernate_sequence` (
   `next_val` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-
--- --------------------------------------------------------
-
 --
--- Structure de la table `longueur`
+-- Déchargement des données de la table `hibernate_sequence`
 --
+
+
 
 DROP TABLE IF EXISTS `longueur`;
 CREATE TABLE IF NOT EXISTS `longueur` (
@@ -66,11 +65,7 @@ CREATE TABLE IF NOT EXISTS `longueur` (
   `id_voie` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_longueur`),
   KEY `FKsntp125c2624k8psbmjo0daru` (`id_voie`)
-) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Déchargement des données de la table `longueur`
---
+) ENGINE=InnoDB AUTO_INCREMENT=257 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 -- --------------------------------------------------------
@@ -83,13 +78,13 @@ DROP TABLE IF EXISTS `reservation`;
 CREATE TABLE IF NOT EXISTS `reservation` (
   `id_reservation` int(11) NOT NULL AUTO_INCREMENT,
   `id_topo` int(10) NOT NULL,
-  `id_emprunteur` int(10) NOT NULL,
   `id_user` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_reservation`),
-  KEY `fk_emprunteur` (`id_emprunteur`),
   KEY `FKiqjwftpb6o2kyu3k45xiemp6c` (`id_user`),
   KEY `FKrxx2d19vx5ndessah3r5wit0c` (`id_topo`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 
 -- --------------------------------------------------------
 
@@ -118,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `secteur` (
   `id_site` int(10) NOT NULL,
   PRIMARY KEY (`id_secteur`),
   KEY `FK7ayk0wx98i7qd6d1xstgrexdh` (`id_site`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 -- --------------------------------------------------------
@@ -132,8 +127,10 @@ CREATE TABLE IF NOT EXISTS `site` (
   `id_site` int(5) NOT NULL AUTO_INCREMENT,
   `nom_site` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `region` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `tag_active` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id_site`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 
 
 -- --------------------------------------------------------
@@ -157,6 +154,7 @@ CREATE TABLE IF NOT EXISTS `spring_session` (
   KEY `SPRING_SESSION_IX3` (`PRINCIPAL_NAME`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC;
 
+
 -- --------------------------------------------------------
 
 --
@@ -170,6 +168,7 @@ CREATE TABLE IF NOT EXISTS `spring_session_attributes` (
   `ATTRIBUTE_BYTES` blob NOT NULL,
   PRIMARY KEY (`SESSION_PRIMARY_ID`,`ATTRIBUTE_NAME`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC;
+
 
 -- --------------------------------------------------------
 
@@ -189,7 +188,8 @@ CREATE TABLE IF NOT EXISTS `topo` (
   PRIMARY KEY (`id_topo`),
   KEY `FKsmygsg9hrrwl92yqgnnu41rkg` (`id_user`),
   KEY `FKq0u3kvcohifg7l9xe37aivo4i` (`id_site`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 
 
 -- --------------------------------------------------------
@@ -212,7 +212,8 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   UNIQUE KEY `UKrma38wvnqfaf66vvmi57c71lo` (`email`),
   KEY `fk_role` (`id_role`),
   KEY `FKdn75sjxbld9wdj929y68a4hut` (`role_id_role`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 
 
 -- --------------------------------------------------------
@@ -229,8 +230,7 @@ CREATE TABLE IF NOT EXISTS `voie` (
   `id_secteur` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_voie`),
   KEY `FKbo23xms8n7a30fovqfoh50aw4` (`id_secteur`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 --

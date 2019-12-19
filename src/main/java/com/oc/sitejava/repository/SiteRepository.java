@@ -3,8 +3,9 @@ package com.oc.sitejava.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-
+import org.springframework.transaction.annotation.Transactional;
 
 import com.oc.sitejava.dto.SiteDto;
 import com.oc.sitejava.entity.Site;
@@ -24,4 +25,10 @@ public interface SiteRepository extends JpaRepository<Site, Integer >{
 			+ "WHERE s.region=?1 AND v.cotation=?2 ",
 			nativeQuery = true)
 	Integer getIdSiteBySearch(String region, String cotation);
+	
+	@Transactional
+	@Modifying
+	@Query(value = "update site set tag_active = ?1 where id_site = ?2", 
+	  nativeQuery = true)
+	void addTag(String tag_active, Integer id_site);
 }

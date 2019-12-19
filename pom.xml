@@ -20,7 +20,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-	<!-- Spring boot & Thymeleaf & JPA -->		
+	<!-- Spring boot & Thymeleaf & JPA-->		
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

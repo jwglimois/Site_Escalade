@@ -56,7 +56,7 @@ import com.oc.sitejava.service.VoieService;
 
 
 @Controller
-@SessionAttributes({"infoSession", "idUserSession", "allSitesSession"})
+@SessionAttributes({"infoSession", "idUserSession"})
 public class SessionController {
 	
 	@Autowired
@@ -337,14 +337,20 @@ public class SessionController {
 
 /*--------------Taguer le site----------------*/
 
-	@RequestMapping(value = "/taguerSite/{idSite}", method = RequestMethod.POST)
+	@RequestMapping(value = "/taguerSite/{idSiteTag}", method = RequestMethod.POST)
 	public String taguerSite(
-			@PathVariable(name="idSite") int idSite,
-			HttpSession session) {
+			@PathVariable(name="idSiteTag") int idSiteTag) {
 		
+		System.out.println("------idSiteTag----"+idSiteTag);
+		
+		List<Site> listAllSites = siteService.listAll();
+		for(Site s: listAllSites) {
+			if(s.getId_site() == idSiteTag) {
+				siteService.addTag("oui", idSiteTag);
+			}
+		}
 
-		
-		return null;
+		return "redirect:/" + idSiteTag;
 	}
 	
 	

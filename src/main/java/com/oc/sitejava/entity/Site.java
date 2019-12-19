@@ -28,6 +28,9 @@ public class Site  {
 	@Column(name="region")
 	private String region;
 	
+	@Column(name="tag_active")
+	private String tag_active;
+	
 	@Access(AccessType.FIELD)
 	@OneToMany (mappedBy = "site", cascade = CascadeType.ALL)
 	private List<Secteur> listSecteurs;
@@ -83,6 +86,14 @@ public class Site  {
 		this.region = region;
 		this.listSecteurs = listSecteurs;
 	}
+	
+	
+
+	public Site(int id_site, String tag_active) {
+		super();
+		this.id_site = id_site;
+		this.tag_active = tag_active;
+	}
 
 	@Override
 	public String toString() {
@@ -112,6 +123,14 @@ public class Site  {
 
 	public void setListTopo(List<Topo> listTopo) {
 		this.listTopo = listTopo;
+	}
+
+	public String getTag_active() {
+		return tag_active;
+	}
+
+	public void setTag_active(String tag_active) {
+		this.tag_active = tag_active;
 	}
 
 	

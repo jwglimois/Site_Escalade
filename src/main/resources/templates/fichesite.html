@@ -37,22 +37,26 @@ hr:after {
 <div class="row justify-content-center pt-3"> 		
     <div class="col-6" >
     	<div class="row">
-    		<div class="col-8" th:object="${comDto}" >
+    		<div class="col-12" th:object="${comDto}" >  
+  				<div th:unless="${site.tag_active}==null">
+					<span class="p-3 mb-2 bg-success text-white rounded float-right">Officiel Les amis de l’escalade</span>
+				</div>	
     			<div class="row">
     				<div class="col-8">
 			    		<p class="text-dark">N° Site : <span class="text-info" th:text="*{id_site}"  ></span></p>
 				  		<p class="text-dark">Nom du site : <span class="text-info"  th:text="${site.nom_site}"></span></p>
 				  		<p class="text-dark">Région du site : <span class="text-info" th:text="${site.region}"></span></p>
 	  				</div>
-	  				<div class="col-3 form-check" th:each="mySession : ${infoSession}" th:if="${mySession} == '2'">
-	  					<button style="color:red; font-weight:bold" class="bouton" id="bouton_texte" onclick="javascript:afficher_cacher('texte');" >Taguer</button>
-		  					<div id="texte" class="texte" style="color:green">
-							    Officiel Les amis de l’escalade
-							</div>
+	  				<div class="col-3 " th:each="mySession : ${infoSession}" th:if="${mySession} == '2'">
+	  					<div th:if="${site.tag_active}==null">
+			  				<form action="#" th:action="@{/taguerSite/{idSiteTag} (idSiteTag = ${site.id_site})}"  method="post">
+								<div class="form-group">
+									<button class="btn btn-info float-right" type="submit">Taguer Officiel Les amis de l’escalade</button>
+								</div>
+							</form>	
+						</div>
 	  				</div>
 	  			</div>
-	  		</div>
-	  		<div class="col-4" >
 	  		</div>
     	</div>
     	<hr>
@@ -176,21 +180,6 @@ hr:after {
 <!-- Footer -->
 <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-<script>
-function afficher_cacher(id)
-{
-    if(document.getElementById(id).style.visibility=="hidden")
-    {
-        document.getElementById(id).style.visibility="visible";
-        document.getElementById('bouton_'+id).innerHTML='';
-    }
-    else
-    {
-        document.getElementById(id).style.visibility="hidden";
-        document.getElementById('bouton_'+id).innerHTML='Officiel Les amis de l’escalade';
-    }
-    return true;
-}
-</script>
+
 </body>
 </html>

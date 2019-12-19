@@ -27,6 +27,10 @@ public class SiteService {
 		return siteRepository.getIdSiteBySearch(region, cotation);
 	}
 	
+	public void addTag(String tag_active, Integer id_site) {
+		siteRepository.addTag(tag_active, id_site);
+	}
+	
 	public List<Site> listAll(){
 		return siteRepository.findAll();
 	}
